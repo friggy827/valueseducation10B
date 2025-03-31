@@ -3,150 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Values</title>
+    <title>LILY & RUE | Lifestyle</title>
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #333333;
+            --light-bg: #f9f5f0;
+            --dark-text: #333;
+            --accent: #8b7355;
+            --white: #fff;
         }
         
-        [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-color: #f0f0f0;
-        }
-
         body {
-            font-family: 'Courier New', monospace;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Playfair Display', serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
             margin: 0;
             padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
         }
-
-        #clock {
-            font-size: 5rem;
-            font-weight: bold;
+        
+        .header {
+            text-align: center;
+            padding: 3rem 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .brand {
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+        
+        .season {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+        
+        .featured-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 1px;
+            background: var(--accent);
+            margin: 1rem auto;
+        }
+        
+        .must-have {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .must-have-title {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
             margin-bottom: 1rem;
         }
-
-        #date {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: #4a6fa5;
-        }
-
-        .theme-toggle {
-            background: #4a6fa5;
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        
+        .read-more {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 1px;
+            margin-top: 1rem;
             transition: all 0.3s ease;
-            font-size: 1.2rem;
         }
-
-        .theme-toggle:hover {
-            transform: scale(1.1);
+        
+        .read-more:hover {
+            background: var(--accent);
+            color: var(--white);
         }
-
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .category {
+            text-align: center;
+            padding: 2rem;
+            background: var(--white);
+            transition: transform 0.3s ease;
+        }
+        
+        .category:hover {
+            transform: translateY(-5px);
+        }
+        
         @media (max-width: 768px) {
-            #clock {
-                font-size: 3rem;
+            .brand {
+                font-size: 1.8rem;
             }
             
-            #date {
-                font-size: 1rem;
+            .categories {
+                grid-template-columns: 1fr;
             }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="header-text">
-            <h1>Welcome to My Site NIGGA</h1>
+    <header class="header">
+        <div class="brand">LILY & RUE</div>
+        <div class="tagline">Monocha Lifestyle</div>
+        <div class="season">Summer 2024</div>
+        
+        <div class="must-have">
+            <div class="must-have-title">Our Must Have:</div>
+            <a href="#" class="read-more">Discover</a>
         </div>
-
     </header>
-
-    <div id="clock">00:00:00</div>
-    <div id="date">Loading date...</div>
-    <button class="theme-toggle" aria-label="Toggle dark mode">🌓</button>
-
-    <script>
-        // Time and Date Functions
-        function updateClock() {
-            const now = new Date();
-            
-            // Format time (HH:MM:SS)
-            const timeString = now.toLocaleTimeString('en-US', {
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            }).replace(/^24:/, '00:');
-            
-            // Format date (Weekday, Month Day, Year)
-            const dateString = now.toLocaleDateString('en-US', {
-                weekday: 'long',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            document.getElementById('clock').textContent = timeString;
-            document.getElementById('date').textContent = dateString;
-        }
+    
+    <section class="featured-section">
+        <div class="section-title">Featured Categories</div>
         
-        // Update clock immediately and every second
-        updateClock();
-        setInterval(updateClock, 1000);
-        
-        // Dark Mode Functionality
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const themeToggle = document.querySelector('.theme-toggle');
-        
-        // Set initial theme
-        if (prefersDark) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️';
-        } else {
-            themeToggle.textContent = '🌙';
-        }
-
-        // Toggle theme on button click
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-                themeToggle.textContent = '🌙';
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️';
-            }
-            
-            localStorage.setItem('theme', currentTheme === 'dark' ? 'light' : 'dark');
-        });
-
-        // Check for saved preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️';
-        } else if (savedTheme === 'light') {
-            document.documentElement.removeAttribute('data-theme');
-            themeToggle.textContent = '🌙';
-        }
-    </script>
+        <div class="categories">
+            <div class="category">
+                <h3>Home</h3>
+                <p>Curated living spaces</p>
+            </div>
+            <div class="category">
+                <h3>Fashion</h3>
+                <p>Seasonal essentials</p>
+            </div>
+            <div class="category">
+                <h3>Wellness</h3>
+                <p>Mind & body</p>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

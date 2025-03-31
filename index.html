@@ -3,160 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LILY & RUE | Lifestyle</title>
+    <title>Modern Sliding Gallery</title>
     <style>
         :root {
             --light-bg: #f9f5f0;
             --dark-text: #333;
             --accent: #8b7355;
             --white: #fff;
+            --header-bg: rgba(255,255,255,0.9);
+            --nav-link: #555;
         }
         
+        [data-theme="dark"] {
+            --light-bg: #121212;
+            --dark-text: #e0e0e0;
+            --accent: #b59a7a;
+            --header-bg: rgba(30,30,30,0.9);
+            --nav-link: #aaa;
+        }
+
         body {
-            font-family: 'Playfair Display', serif;
-            background-color: var(--light-bg);
-            color: var(--dark-text);
+            font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            color: var(--dark-text);
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
         }
-        
-        .header {
-            text-align: center;
-            padding: 3rem 1rem;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+
+        .bg-slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
         }
-        
-        .brand {
-            font-size: 2.5rem;
-            letter-spacing: 5px;
-            margin-bottom: 0.5rem;
-            font-weight: 300;
-            text-transform: uppercase;
+
+        .bg-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
         }
-        
-        .tagline {
-            font-size: 1rem;
-            letter-spacing: 3px;
-            color: var(--accent);
-            margin-bottom: 2rem;
+
+        .bg-slide.active {
+            opacity: 1;
         }
-        
-        .season {
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            margin-bottom: 2rem;
-        }
-        
-        .featured-section {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-        
-        .section-title:after {
-            content: "";
-            display: block;
-            width: 50px;
-            height: 1px;
-            background: var(--accent);
-            margin: 1rem auto;
-        }
-        
-        .must-have {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .must-have-title {
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-        }
-        
-        .read-more {
-            display: inline-block;
-            padding: 0.8rem 2rem;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            text-decoration: none;
-            letter-spacing: 1px;
-            margin-top: 1rem;
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 1rem 0;
             transition: all 0.3s ease;
         }
-        
-        .read-more:hover {
-            background: var(--accent);
-            color: var(--white);
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
-        
-        .categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 3px;
         }
-        
-        .category {
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-text);
+        }
+
+        .sliding-nav {
+            position: fixed;
+            bottom: 2rem;
+            left: 0;
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 1rem 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .sliding-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-group {
+            display: inline-block;
+            margin: 0 1.5rem;
             text-align: center;
-            padding: 2rem;
-            background: var(--white);
-            transition: transform 0.3s ease;
         }
-        
-        .category:hover {
-            transform: translateY(-5px);
+
+        .nav-group h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
         }
-        
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--nav-link);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .home-indicator {
+            position: fixed;
+            bottom: 5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--dark-text);
+            opacity: 0.7;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+        }
+
         @media (max-width: 768px) {
-            .brand {
-                font-size: 1.8rem;
+            .logo {
+                font-size: 1.4rem;
             }
             
-            .categories {
-                grid-template-columns: 1fr;
+            .nav-group {
+                margin: 0 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
-        <div class="brand">LILY & RUE</div>
-        <div class="tagline">Monocha Lifestyle</div>
-        <div class="season">Summer 2024</div>
-        
-        <div class="must-have">
-            <div class="must-have-title">Our Must Have:</div>
-            <a href="#" class="read-more">Discover</a>
+    <!-- Background Slideshow -->
+    <div class="bg-slideshow">
+        <div class="bg-slide active" style="background-image: url('https://source.unsplash.com/random/1920x1080?minimal,1')"></div>
+        <div class="bg-slide" style="background-image: url('https://source.unsplash.com/random/1920x1080?minimal,2')"></div>
+        <div class="bg-slide" style="background-image: url('https://source.unsplash.com/random/1920x1080?minimal,3')"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+            <div class="logo">HOME</div>
+            <button class="theme-toggle" aria-label="Toggle dark mode">🌓</button>
         </div>
     </header>
-    
-    <section class="featured-section">
-        <div class="section-title">Featured Categories</div>
-        
-        <div class="categories">
-            <div class="category">
-                <h3>Home</h3>
-                <p>Curated living spaces</p>
-            </div>
-            <div class="category">
-                <h3>Fashion</h3>
-                <p>Seasonal essentials</p>
-            </div>
-            <div class="category">
-                <h3>Wellness</h3>
-                <p>Mind & body</p>
+
+    <!-- Home Indicator -->
+    <div class="home-indicator">HOME</div>
+
+    <!-- Sliding Navigation -->
+    <div class="sliding-nav">
+        <div class="nav-group">
+            <h3>LIVING</h3>
+            <div class="nav-links">
+                <a href="#">Furniture</a>
+                <a href="#">Lighting</a>
+                <a href="#">Decor</a>
             </div>
         </div>
-    </section>
+        
+        <div class="nav-group">
+            <h3>STYLE</h3>
+            <div class="nav-links">
+                <a href="#">Women</a>
+                <a href="#">Men</a>
+                <a href="#">Accessories</a>
+            </div>
+        </div>
+        
+        <div class="nav-group">
+            <h3>WELLNESS</h3>
+            <div class="nav-links">
+                <a href="#">Skincare</a>
+                <a href="#">Fragrance</a>
+                <a href="#">Supplements</a>
+            </div>
+        </div>
+        
+        <div class="nav-group">
+            <h3>TRAVEL</h3>
+            <div class="nav-links">
+                <a href="#">Destinations</a>
+                <a href="#">Hotels</a>
+                <a href="#">Essentials</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Background Slideshow
+        const slides = document.querySelectorAll('.bg-slide');
+        let currentSlide = 0;
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 5000);
+        
+        // Dark Mode Toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        
+        // Set initial theme from localStorage or preference
+        const savedTheme = localStorage.getItem('theme') || 
+                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        } else {
+            themeToggle.textContent = '🌙';
+        }
+        
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        // Make sliding nav scrollable on desktop
+        const slidingNav = document.querySelector('.sliding-nav');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        slidingNav.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - slidingNav.offsetLeft;
+            scrollLeft = slidingNav.scrollLeft;
+        });
+        
+        slidingNav.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+        
+        slidingNav.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+        
+        slidingNav.addEventListener('mousemove', (e) => {
+            if(!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slidingNav.offsetLeft;
+            const walk = (x - startX) * 2;
+            slidingNav.scrollLeft = scrollLeft - walk;
+        });
+    </script>
 </body>
 </html>

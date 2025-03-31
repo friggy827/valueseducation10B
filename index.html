@@ -3,30 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blank Template</title>
+    <title>My Enhanced Website</title>
     <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --header-bg: #f5f5f5;
+            --accent-color: #4a6fa5;
         }
         
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #f0f0f0;
+            --header-bg: #1e1e1e;
+            --accent-color: #6d8cc7;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             line-height: 1.6;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            transition: background 0.3s ease, color 0.3s ease;
         }
         
-        header, footer {
-            background: #f5f5f5;
+        header {
+            background: var(--header-bg);
             padding: 20px;
-            text-align: center;
             margin: 10px 0;
-            border-radius: 5px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header-text {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .time-display {
+            text-align: right;
+            font-family: 'Courier New', monospace;
+        }
+        
+        #current-date {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        #current-time {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
         
         main {
@@ -34,30 +69,150 @@
             min-height: 60vh;
         }
         
-        h1 {
-            margin-bottom: 10px;
+        footer {
+            background: var(--header-bg);
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 20px;
         }
-        
-        /* Responsive */
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .time-display {
+                text-align: center;
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to My Site</h1>
-        <p>Start building here</p>
+        <div class="header-text">
+            <h1>Welcome to My Site</h1>
+            <p>Now with Dark Mode and Live Clock</p>
+        </div>
+        
+        <div class="time-display">
+            <div id="current-date">Loading date...</div>
+            <div id="current-time">00:00:00</div>
+        </div>
     </header>
     
     <main>
-        <p>This is a blank template ready for your content.</p>
+        <p>This template now includes:</p>
+        <ul>
+            <li>Automatic dark/light mode detection</li>
+            <li>Manual theme toggle</li>
+            <li>Live updating time and date</li>
+            <li>Responsive design</li>
+        </ul>
     </main>
     
     <footer>
-        <p>&copy; 2024 My Site. All rights reserved.</p>
+        <p>&copy; <span id="current-year"></span> My Site. All rights reserved.</p>
     </footer>
+
+    <button class="theme-toggle" aria-label="Toggle dark mode">🌓</button>
+
+    <script>
+        // Time and Date Functions
+        function updateClock() {
+            const now = new Date();
+            
+            // Format time (HH:MM:SS)
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            }).replace(/^24:/, '00:');
+            
+            // Format date (Weekday, Month Day, Year)
+            const dateString = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+            
+            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('current-date').textContent = dateString;
+            document.getElementById('current-year').textContent = now.getFullYear();
+        }
+        
+        // Update clock immediately and every second
+        updateClock();
+        setInterval(updateClock, 1000);
+        
+        // Dark Mode Functionality
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const themeToggle = document.querySelector('.theme-toggle');
+        
+        // Set initial theme
+        if (prefersDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        } else {
+            themeToggle.textContent = '🌙';
+        }
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+            
+            localStorage.setItem('theme', currentTheme === 'dark' ? 'light' : 'dark');
+        });
+
+        // Check for saved preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        } else if (savedTheme === 'light') {
+            document.documentElement.removeAttribute('data-theme');
+            themeToggle.textContent = '🌙';
+        }
+    </script>
 </body>
 </html>

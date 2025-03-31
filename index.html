@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nike-Style Blog</title>
+    <style>
+        :root {
+            --nike-black: #111;
+            --nike-white: #fff;
+            --nike-gray: #f5f5f5;
+            --nike-neon: #ff0050;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--nike-white);
+            color: var(--nike-black);
+        }
+        
+        /* Header - Nike Style */
+        header {
+            background-color: var(--nike-black);
+            color: var(--nike-white);
+            padding: 20px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: -1px;
+        }
+        
+        .logo span {
+            color: var(--nike-neon);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: var(--nike-white);
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--nike-neon);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            color: var(--nike-white);
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--nike-neon);
+            color: var(--nike-white);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255,0,80,0.3);
+        }
+        
+        /* Blog Grid - Product Card Style */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 5%;
+        }
+        
+        .blog-card {
+            background-color: var(--nike-white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .card-content p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .read-more {
+            color: var(--nike-neon);
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--nike-black);
+            color: var(--nike-white);
+            padding: 50px 5%;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .footer-links a {
+            color: var(--nike-white);
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        
+        .social-icons {
+            margin-bottom: 30px;
+        }
+        
+        .social-icons a {
+            color: var(--nike-white);
+            margin: 0 10px;
+            font-size: 1.5rem;
+        }
+        
+        .copyright {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Nike-Style Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">BLOG<span>SPORT</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Articles</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Banner -->
+    <section class="hero">
+        <h1>JUST DO IT.</h1>
+        <p>Get the latest insights, training tips, and sport innovations from our team of experts.</p>
+        <a href="#" class="btn">Explore Articles</a>
+    </section>
+    
+    <!-- Blog Grid -->
+    <section class="blog-grid">
+        <article class="blog-card">
+            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+            <div class="card-content">
+                <h3>Maximize Your Running Performance</h3>
+                <p>Discover the latest techniques to improve your running efficiency and endurance.</p>
+                <a href="#" class="read-more">Read More →</a>
+            </div>
+        </article>
+        
+        <article class="blog-card">
+            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1538805060514-97d9cc17730c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+            <div class="card-content">
+                <h3>Essential Gym Equipment for 2024</h3>
+                <p>The must-have tools to take your workouts to the next level this year.</p>
+                <a href="#" class="read-more">Read More →</a>
+            </div>
+        </article>
+        
+        <article class="blog-card">
+            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+            <div class="card-content">
+                <h3>Nutrition for Peak Performance</h3>
+                <p>Fuel your body right with these science-backed nutrition strategies.</p>
+                <a href="#" class="read-more">Read More →</a>
+            </div>
+        </article>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">Home</a>
+            <a href="#">Articles</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy</a>
+        </div>
+        <div class="social-icons">
+            <a href="#">FB</a>
+            <a href="#">IG</a>
+            <a href="#">TW</a>
+            <a href="#">YT</a>
+        </div>
+        <p class="copyright">© 2024 BlogSport. All rights reserved.</p>
+    </footer>
+</body>
+</html>

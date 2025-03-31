@@ -1,0 +1,30 @@
+/* Add this to your existing CSS */
+body {
+    max-width: 1400px;
+}
+
+.header-inner {
+    max-width: 1400px;
+}
+
+.sliding-nav {
+    width: 90%;
+    left: 5%;
+}
+
+.nav-group {
+    min-width: 280px;
+}
+
+@media (max-width: 768px) {
+    body, .header-inner {
+        max-width: 100%;
+    }
+    .sliding-nav {
+        width: 100%;
+        left: 0;
+    }
+    .nav-group {
+        min-width: 220px;
+    }
+}

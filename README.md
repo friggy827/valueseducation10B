@@ -1,0 +1,1 @@
+# friggy.github.io

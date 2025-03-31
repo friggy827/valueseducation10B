@@ -3,216 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Values 10B</title>
+    <title>Sleece</title>
     <style>
         :root {
-            --light-bg: #f9f5f0;
-            --dark-text: #333;
-            --accent: #8b7355;
-            --white: #fff;
-            --header-bg: rgba(255,255,255,0.9);
-            --nav-link: #555;
+            --light-bg: #ffffff;
+            --dark-text: #222222;
+            --accent: #4a4a4a;
+            --hover-accent: #000000;
         }
         
         [data-theme="dark"] {
             --light-bg: #121212;
             --dark-text: #e0e0e0;
-            --accent: #b59a7a;
-            --header-bg: rgba(30,30,30,0.9);
-            --nav-link: #aaa;
+            --accent: #a0a0a0;
+            --hover-accent: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background 0.3s, color 0.3s;
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--light-bg);
             color: var(--dark-text);
-            transition: background-color 0.5s ease;
-            overflow-x: hidden;
-        }
-
-        .bg-slideshow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height:  90vh;
-            z-index: -1;
-        }
-
-        .bg-slide {
-            position: absolute;
-            width: 100%;
-            height:  90%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-        }
-
-        .bg-slide.active {
-            opacity: 1;
+            line-height: 1.6;
         }
 
         header {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            background: var(--header-bg);
-            backdrop-filter: blur(10px);
+            padding: 30px 5%;
             z-index: 100;
-            padding: 1rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .header-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
         }
 
         .logo {
             font-size: 1.8rem;
-            font-weight: 300;
-            letter-spacing: 3px;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--hover-accent);
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--hover-accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover:after {
+            width: 100%;
         }
 
         .theme-toggle {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            color: var(--dark-text);
-        }
-
-        .sliding-nav {
-            position: fixed;
-            bottom: 2rem;
-            left: 0;
-            width: 100%;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 1rem 0;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .sliding-nav::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-group {
-            display: inline-block;
-            margin: 0 1.5rem;
-            text-align: center;
-        }
-
-        .nav-group h3 {
             color: var(--accent);
-            margin-bottom: 0.5rem;
-            font-weight: 400;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
         }
 
-        .nav-links {
+        main {
+            min-height: 100vh;
             display: flex;
-            gap: 1.5rem;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5%;
+            margin-top: -60px;
         }
 
-        .nav-links a {
-            color: var(--nav-link);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .home-indicator {
-            position: fixed;
-            bottom: 5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--dark-text);
-            opacity: 0.7;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
+        .hero {
+            font-size: 5vw;
+            font-weight: 300;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            max-width: 80%;
         }
 
         @media (max-width: 768px) {
-            .logo {
-                font-size: 1.4rem;
+            header {
+                padding: 20px 5%;
+                flex-direction: column;
+                gap: 20px;
             }
             
-            .nav-group {
-                margin: 0 1rem;
+            nav ul {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
-            .nav-links {
-                gap: 1rem;
+            .hero {
+                font-size: 2.5rem;
+                max-width: 100%;
+                margin-top: 80px;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Background Slideshow -->
-    <div class="bg-slideshow">
-        <div class="bg-slide active" style="background-image: url('437763054-431663749570400-5944916321091881346-n_orig.jpg')"></div>
-        <div class="bg-slide" style="background-image: url('456566834-480596074849190-7962507797206822728-n_orig.jpg')"></div>
-        <div class="bg-slide" style="background-image: url('466744013-956377076387582-995495227363875559-n_orig.jpg')"></div>
-        <div class="bg-slide" style="background-image: url('476718043-1823053565164843-6868949942635773770-n_orig.jpg')"></div>
-        <div class="bg-slide" style="background-image: url('482103358-3955324428038370-8521319220666185969-n_orig.jpg')"></div>
-    </div>
-
-    <!-- Header -->
     <header>
-        <div class="header-inner">
-            <div class="logo">HOME</div>
-            <button class="theme-toggle" aria-label="Toggle dark mode">🌓</button>
-        </div>
+        <div class="logo">Sleece</div>
+        <nav>
+            <ul>
+                <li><a href="#">Frontpage</a></li>
+                <li><a href="#">Sudres</a></li>
+                <li><a href="#">Pages</a></li>
+                <li><a href="#">Elements</a></li>
+                <li><a href="#">Portfolios</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </nav>
+        <button class="theme-toggle" aria-label="Toggle dark mode">🌓</button>
     </header>
 
-    <!-- Home Indicator -->
-    <div class="home-indicator">HOME</div>
+    <main>
+        <h1 class="hero">Minimal Design<br>Maximum Impact</h1>
+    </main>
 
-    
     <script>
-        // Background Slideshow
-        const slides = document.querySelectorAll('.bg-slide');
-        let currentSlide = 0;
-        
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-        
-        setInterval(nextSlide, 5000);
-        
         // Dark Mode Toggle
         const themeToggle = document.querySelector('.theme-toggle');
         
         // Set initial theme from localStorage or preference
-        const savedTheme = localStorage.getItem('theme') || 
-                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const currentTheme = localStorage.getItem('theme') || 
+                           (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         
-        if (savedTheme === 'dark') {
+        if (currentTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
             themeToggle.textContent = '☀️';
-        } else {
-            themeToggle.textContent = '🌙';
         }
         
         // Toggle theme
         themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
                 document.documentElement.removeAttribute('data-theme');
                 themeToggle.textContent = '🌙';
                 localStorage.setItem('theme', 'light');
@@ -221,34 +176,6 @@
                 themeToggle.textContent = '☀️';
                 localStorage.setItem('theme', 'dark');
             }
-        });
-        
-        // Make sliding nav scrollable on desktop
-        const slidingNav = document.querySelector('.sliding-nav');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-        
-        slidingNav.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - slidingNav.offsetLeft;
-            scrollLeft = slidingNav.scrollLeft;
-        });
-        
-        slidingNav.addEventListener('mouseleave', () => {
-            isDown = false;
-        });
-        
-        slidingNav.addEventListener('mouseup', () => {
-            isDown = false;
-        });
-        
-        slidingNav.addEventListener('mousemove', (e) => {
-            if(!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - slidingNav.offsetLeft;
-            const walk = (x - startX) * 2;
-            slidingNav.scrollLeft = scrollLeft - walk;
         });
     </script>
 </body>

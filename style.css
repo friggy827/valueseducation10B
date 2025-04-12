@@ -55,33 +55,26 @@
     margin-left: 2px;
   }
   
-/* Ensure dropdowns are hidden by default */
-.dropdown-content {
-  display: none;
-}
-
-/* Dropdown Base Styles */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #0d2b56;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-  z-index: 1;
-  border-radius: 0 0 4px 4px;
-  left: 0;
-}
-
-/* Mobile Styles */
+/* Mobile styles */
 @media (max-width: 768px) {
   .dropdown-content {
+      display: none;
       position: static;
       width: 100%;
-      box-shadow: none;
+  }
+  .dropdown.active .dropdown-content {
+      display: block;
   }
 }
 
-/* Active State (Works for both mobile/desktop) */
-.dropdown.active .dropdown-content {
-  display: block;
+/* Desktop styles */
+@media (min-width: 769px) {
+  .dropdown-content {
+      display: none;
+      position: absolute;
+  }
+  .dropdown:hover .dropdown-content,
+  .dropdown.active .dropdown-content {
+      display: block;
+  }
 }

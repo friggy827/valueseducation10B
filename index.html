@@ -17,60 +17,66 @@
             background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         /* Header Styles */
         header {
             background-color: #1a3e72;
             color: white;
-            padding: 20px 0;
+            padding: 15px 0;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .logo-container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .logo {
-            height: 80px;
-            margin-right: 20px;
+            height: 70px;
+            width: auto;
+            margin-bottom: 10px;
+            background: transparent !important;
         }
         
         .header-text h1 {
-            font-size: 2.2rem;
+            font-size: 1.5rem;
             margin-bottom: 5px;
         }
         
         .header-text p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
         }
         
         /* Navigation */
         nav {
             background-color: #0d2b56;
-            padding: 10px 0;
+            padding: 8px 0;
         }
         
         nav ul {
             display: flex;
             justify-content: center;
             list-style: none;
+            flex-wrap: wrap;
         }
         
         nav li {
-            margin: 0 15px;
+            margin: 3px 8px;
         }
         
         nav a {
             color: white;
             text-decoration: none;
-            font-weight: 500;
-            padding: 5px 10px;
+            font-size: 0.9rem;
+            padding: 5px 8px;
             border-radius: 4px;
             transition: background-color 0.3s;
         }
@@ -81,36 +87,39 @@
         
         /* Main Content */
         .container {
+            flex: 1;
             max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
+            margin: 20px auto;
+            padding: 0 15px;
+            width: 100%;
         }
         
         .mission-box {
             background-color: white;
             border-radius: 8px;
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 20px;
+            margin-bottom: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             border-left: 5px solid #1a3e72;
         }
         
         .mission-box h2 {
             color: #1a3e72;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
         }
         
         .mission-box p {
             font-style: italic;
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            line-height: 1.6;
         }
         
         /* Slideshow */
         .slideshow-container {
             position: relative;
-            max-width: 1000px;
-            margin: 40px auto;
+            max-width: 100%;
+            margin: 20px auto;
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -123,19 +132,9 @@
         
         .slide img {
             width: 100%;
-            max-height: 500px;
+            max-height: 50vh;
             object-fit: cover;
-        }
-        
-        .slide-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(0,0,0,0.6);
-            color: white;
-            padding: 15px;
-            text-align: center;
+            display: block;
         }
         
         /* Navigation Arrows */
@@ -143,21 +142,26 @@
             cursor: pointer;
             position: absolute;
             top: 50%;
-            width: auto;
-            padding: 16px;
-            margin-top: -22px;
+            width: 40px;
+            height: 40px;
+            margin-top: -20px;
             color: white;
             font-weight: bold;
-            font-size: 18px;
-            transition: 0.3s;
+            font-size: 24px;
             background-color: rgba(0,0,0,0.3);
-            border-radius: 0 3px 3px 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             user-select: none;
         }
         
+        .prev {
+            left: 10px;
+        }
+        
         .next {
-            right: 0;
-            border-radius: 3px 0 0 3px;
+            right: 10px;
         }
         
         .prev:hover, .next:hover {
@@ -167,14 +171,14 @@
         /* Dot Indicators */
         .dot-container {
             text-align: center;
-            padding: 15px;
+            padding: 10px;
         }
         
         .dot {
             cursor: pointer;
-            height: 12px;
-            width: 12px;
-            margin: 0 5px;
+            height: 10px;
+            width: 10px;
+            margin: 0 4px;
             background-color: #bbb;
             border-radius: 50%;
             display: inline-block;
@@ -190,38 +194,69 @@
             background-color: #1a3e72;
             color: white;
             text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
+            padding: 15px 0;
+            margin-top: auto;
         }
         
         .creator {
             font-style: italic;
-            margin-top: 10px;
+            margin-top: 5px;
+            font-size: 0.9rem;
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            header {
+                padding: 20px 0;
+            }
+            
             .logo-container {
-                flex-direction: column;
+                flex-direction: row;
+                justify-content: center;
             }
             
             .logo {
-                margin-right: 0;
-                margin-bottom: 15px;
+                height: 80px;
+                margin-bottom: 0;
+                margin-right: 20px;
             }
             
-            nav ul {
-                flex-direction: column;
-                align-items: center;
+            .header-text h1 {
+                font-size: 2rem;
+            }
+            
+            .header-text p {
+                font-size: 1.1rem;
             }
             
             nav li {
-                margin: 5px 0;
+                margin: 0 15px;
             }
             
-            .prev, .next {
-                padding: 10px;
-                font-size: 16px;
+            nav a {
+                font-size: 1rem;
+                padding: 5px 10px;
+            }
+            
+            .container {
+                padding: 0 20px;
+                margin: 30px auto;
+            }
+            
+            .mission-box {
+                padding: 30px;
+            }
+            
+            .mission-box h2 {
+                font-size: 1.5rem;
+            }
+            
+            .mission-box p {
+                font-size: 1.1rem;
+            }
+            
+            .slide img {
+                max-height: 500px;
             }
         }
     </style>
@@ -229,7 +264,7 @@
 <body>
     <header>
         <div class="logo-container">
-            <img src="cksc logo.jpg" alt="CKSC Logo" class="logo">
+            <img src="cksc-logo-transparent.png" alt="CKSC Logo" class="logo">
             <div class="header-text">
                 <h1>VALUES EDUCATION 10B</h1>
                 <p>Chiang Kai Shek College</p>
@@ -257,24 +292,27 @@
         <div class="slideshow-container">
             <!-- Slide 1 -->
             <div class="slide fade">
-                <img src="photo1.jpg" alt="Class Activity">
+                <img src="photo1.jpg" alt="Class Activity" loading="lazy">
             </div>
             
             <!-- Slide 2 -->
             <div class="slide fade">
-                <img src="photo2.jpg" alt="Field Trip">
+                <img src="photo2.jpg" alt="Field Trip" loading="lazy">
             </div>
 
+            <!-- Slide 3 -->
             <div class="slide fade">
-                <img src="photo3.jpg" alt="Field Trip">
+                <img src="photo3.jpg" alt="Class Event" loading="lazy">
             </div>
 
+            <!-- Slide 4 -->
             <div class="slide fade">
-                <img src="photo4.jpg" alt="Field Trip">
+                <img src="photo4.jpg" alt="Group Activity" loading="lazy">
             </div>
 
+            <!-- Slide 5 -->
             <div class="slide fade">
-                <img src="photo5.jpg" alt="Field Trip">
+                <img src="photo5.jpg" alt="School Project" loading="lazy">
             </div>
             
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -284,53 +322,108 @@
         <div class="dot-container">
             <span class="dot" onclick="currentSlide(1)"></span> 
             <span class="dot" onclick="currentSlide(2)"></span> 
-            <span class="dot" onclick="currentSlide(3)"></span> 
-            <span class="dot" onclick="currentSlide(4)"></span> 
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
             <span class="dot" onclick="currentSlide(5)"></span>
         </div>
     </div>
     
     <footer>
         <p>VALUES EDUCATION 10B - CHIANG KAI SHEK COLLEGE</p>
-        <p class="creator">CREATED BY: Joshua Wu Harry So</p>
+        <p class="creator">CREATED BY: Joshua Wu and Harry So</p>
     </footer>
     
     <script>
+        // Mobile-optimized slideshow with touch support
         let slideIndex = 1;
-        showSlides(slideIndex);
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let slideInterval;
         
+        // Initialize slideshow
+        showSlides(slideIndex);
+        startAutoAdvance();
+        
+        function showSlides(n) {
+            const slides = document.getElementsByClassName("slide");
+            const dots = document.getElementsByClassName("dot");
+            
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            
+            // Hide all slides
+            for (let slide of slides) {
+                slide.style.display = "none";
+            }
+            
+            // Update dots
+            for (let dot of dots) {
+                dot.classList.remove("active");
+            }
+            
+            // Show current slide
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].classList.add("active");
+        }
+        
+        // Navigation functions
         function plusSlides(n) {
+            pauseAutoAdvance();
             showSlides(slideIndex += n);
+            resumeAutoAdvance();
         }
         
         function currentSlide(n) {
+            pauseAutoAdvance();
             showSlides(slideIndex = n);
+            resumeAutoAdvance();
         }
         
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("slide");
-            let dots = document.getElementsByClassName("dot");
-            
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
-            
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            
-            slides[slideIndex-1].style.display = "block";
-            dots[slideIndex-1].className += " active";
+        // Auto-advance control
+        function startAutoAdvance() {
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
+            slideInterval = setInterval(() => {
+                plusSlides(1);
+            }, isMobile ? 7000 : 5000);
         }
         
-        // Auto-advance every 5 seconds
-        setInterval(function() {
-            plusSlides(1);
-        }, 3000);
+        function pauseAutoAdvance() {
+            clearInterval(slideInterval);
+        }
+        
+        function resumeAutoAdvance() {
+            startAutoAdvance();
+        }
+        
+        // Touch swipe support
+        const slideshow = document.querySelector('.slideshow-container');
+        
+        slideshow.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            pauseAutoAdvance();
+        }, { passive: true });
+        
+        slideshow.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            resumeAutoAdvance();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const threshold = 50; // Minimum swipe distance in pixels
+            
+            if (touchEndX < touchStartX - threshold) {
+                plusSlides(1); // Swipe left = next slide
+            } else if (touchEndX > touchStartX + threshold) {
+                plusSlides(-1); // Swipe right = previous slide
+            }
+        }
+        
+        // Handle screen resize
+        window.addEventListener('resize', () => {
+            clearInterval(slideInterval);
+            startAutoAdvance();
+        });
     </script>
 </body>
 </html>

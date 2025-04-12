@@ -1,0 +1,46 @@
+.slideshow-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between arrows and slideshow */
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  
+  .slideshow-container {
+    flex: 1; /* Takes remaining space */
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  /* Arrow styles (updated) */
+  .prev, .next {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    opacity: 0.9;
+  }
+  
+  .prev::after, .next::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #1a3e72;
+    border-right: 2px solid #1a3e72;
+  }
+  
+  .prev::after {
+    transform: rotate(-135deg);
+    margin-right: 2px;
+  }
+  
+  .next::after {
+    transform: rotate(45deg);
+    margin-left: 2px;
+  }

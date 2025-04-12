@@ -85,3 +85,17 @@
       display: block;
   }
 }
+
+.dropdown-content {
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.dropdown.active .dropdown-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown.active > a {
+  background: #1a4e8c !important;
+}

@@ -3,180 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleece</title>
+    <title>Vision Mission | CKSC</title>
     <style>
-        :root {
-            --light-bg: #ffffff;
-            --dark-text: #222222;
-            --accent: #4a4a4a;
-            --hover-accent: #000000;
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f9f9f9;
         }
         
-        [data-theme="dark"] {
-            --light-bg: #121212;
-            --dark-text: #e0e0e0;
-            --accent: #a0a0a0;
-            --hover-accent: #ffffff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--light-bg);
-            color: var(--dark-text);
-            line-height: 1.6;
-        }
-
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 30px 5%;
-            z-index: 100;
+        .header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
         }
-
+        
         .logo {
-            font-size: 1.8rem;
-            font-weight: 500;
-            letter-spacing: 2px;
+            height: 80px;
+            margin-right: 20px;
         }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 40px;
+        
+        h1 {
+            color: #1a3e72;
+            border-bottom: 2px solid #1a3e72;
+            padding-bottom: 10px;
+            margin-top: 0;
         }
-
-        nav a {
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            position: relative;
-        }
-
-        nav a:hover {
-            color: var(--hover-accent);
-        }
-
-        nav a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--hover-accent);
-            transition: width 0.3s;
-        }
-
-        nav a:hover:after {
+        
+        .campus-image {
             width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--accent);
+        
+        .mission-statement {
+            font-style: italic;
+            font-size: 1.1em;
+            margin: 30px 0;
+            padding: 0 20px;
+            border-left: 3px solid #1a3e72;
+            background-color: #fff;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-
-        main {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 5%;
-            margin-top: -60px;
+        
+        .class-info {
+            font-weight: bold;
+            margin: 20px 0;
+            font-size: 1.2em;
+            color: #1a3e72;
         }
-
-        .hero {
-            font-size: 5vw;
-            font-weight: 300;
-            letter-spacing: -1px;
-            line-height: 1.2;
-            max-width: 80%;
+        
+        .creator {
+            margin-top: 50px;
+            text-align: right;
+            font-style: italic;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
         }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 20px 5%;
+        
+        @media (max-width: 600px) {
+            .header {
                 flex-direction: column;
-                gap: 20px;
+                text-align: center;
             }
             
-            nav ul {
-                gap: 20px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .hero {
-                font-size: 2.5rem;
-                max-width: 100%;
-                margin-top: 80px;
+            .logo {
+                margin-right: 0;
+                margin-bottom: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">Sleece</div>
-        <nav>
-            <ul>
-                <li><a href="#">Frontpage</a></li>
-                <li><a href="#">Sudres</a></li>
-                <li><a href="#">Pages</a></li>
-                <li><a href="#">Elements</a></li>
-                <li><a href="#">Portfolios</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
-        </nav>
-        <button class="theme-toggle" aria-label="Toggle dark mode">🌓</button>
-    </header>
-
-    <main>
-        <h1 class="hero">Minimal Design<br>Maximum Impact</h1>
-    </main>
-
-    <script>
-        // Dark Mode Toggle
-        const themeToggle = document.querySelector('.theme-toggle');
-        
-        // Set initial theme from localStorage or preference
-        const currentTheme = localStorage.getItem('theme') || 
-                           (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        
-        if (currentTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️';
-        }
-        
-        // Toggle theme
-        themeToggle.addEventListener('click', () => {
-            if (document.documentElement.getAttribute('data-theme') === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-                themeToggle.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️';
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-    </script>
+    <div class="header">
+        <!-- Replace with actual CKSC logo path -->
+        <img src="cksc-logo.png" alt="CKSC Logo" class="logo">
+        <div>
+            <h1>Vision Mission | CKSC</h1>
+        </div>
+    </div>
+    
+    <!-- Replace with actual CKSC campus image path -->
+    <img src="cksc-campus.jpg" alt="CKSC Campus" class="campus-image">
+    
+    <div class="mission-statement">
+        "To be a premier educational institution, recognized locally and globally, that nurtures students to become empowered leaders, lifelong learners, and responsible contributors to society, upholding Filipino-Chinese values, and fostering a sense of unity, excellence, and social responsibility."
+    </div>
+    
+    <div class="class-info">
+        10B - Chiang Kai Shek College [CKSC]
+    </div>
+    
+    <div class="creator">
+        CREATOR<br>
+        Joshua Wu Harry So
+    </div>
 </body>
 </html>

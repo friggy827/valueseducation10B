@@ -624,5 +624,89 @@
             setupDropdowns();
         });
     </script>
+    <script>
+        // ===== FOOLPROOF DROPDOWN SOLUTION ===== //
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            
+            // Better mobile detection
+            function isMobileView() {
+                return window.matchMedia('(max-width: 768px)').matches;
+            }
+            
+            // Track current open dropdown
+            let currentOpenDropdown = null;
+            
+            // Close all dropdowns
+            function closeAllDropdowns() {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+                currentOpenDropdown = null;
+            }
+            
+            // Setup dropdown behavior
+            function setupDropdownBehavior() {
+                dropdowns.forEach(dropdown => {
+                    const link = dropdown.querySelector('a');
+                    
+                    // Clear existing events
+                    link.onclick = null;
+                    dropdown.onmouseenter = null;
+                    dropdown.onmouseleave = null;
+                    
+                    // Mobile behavior
+                    if (isMobileView()) {
+                        link.onclick = function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
+                            // If clicking the already open dropdown, close it
+                            if (currentOpenDropdown === dropdown) {
+                                closeAllDropdowns();
+                                return;
+                            }
+                            
+                            // Otherwise open this dropdown
+                            closeAllDropdowns();
+                            dropdown.classList.add('active');
+                            currentOpenDropdown = dropdown;
+                        };
+                    } 
+                    // Desktop behavior
+                    else {
+                        dropdown.onmouseenter = function() {
+                            closeAllDropdowns();
+                            dropdown.classList.add('active');
+                            currentOpenDropdown = dropdown;
+                        };
+                        
+                        dropdown.onmouseleave = function() {
+                            closeAllDropdowns();
+                        };
+                    }
+                });
+            }
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                setupDropdownBehavior();
+            });
+            
+            // Initial setup
+            setupDropdownBehavior();
+            
+            console.log('Dropdown system ready');
+        });
+        
+        // Keep your existing slideshow code here
+        </script>
 </body>
 </html>

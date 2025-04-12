@@ -55,16 +55,6 @@
     margin-left: 2px;
   }
   
-  /* Mobile dropdown styles */
-@media (max-width: 768px) {
-  .dropdown-content {
-      display: none;
-  }
-  .dropdown.active .dropdown-content {
-      display: block;
-  }
-}
-
 /* Ensure dropdowns are hidden by default */
 .dropdown-content {
   display: none;

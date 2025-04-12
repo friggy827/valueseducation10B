@@ -308,6 +308,29 @@
             }
         }
     </style>
+    <style>
+        /* [All previous CSS remains the same until dropdown styles] */
+
+        /* Dropdown Styles - UPDATED */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #0d2b56;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0 0 4px 4px;
+            left: 0;
+        }
+        
+        /* REMOVED: .dropdown:hover .dropdown-content (conflicts with JS) */
+        
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        /* [Rest of existing CSS remains the same] */
+    </style>
 </head>
 <body>
     <header>
@@ -521,6 +544,84 @@
                     this.parentElement.classList.toggle('active');
                 }
             });
+        });
+    </script>
+    <script>
+        // ===== SLIDESHOW CODE (keep existing) ===== //
+        // [Previous slideshow JavaScript remains exactly the same]
+
+        // ===== UPDATED DROPDOWN CODE ===== //
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            let isMobile = window.innerWidth <= 768;
+
+            function setupDropdowns() {
+                dropdowns.forEach(dropdown => {
+                    const link = dropdown.querySelector('a');
+                    
+                    // Remove previous event listeners
+                    link.removeEventListener('click', mobileClickHandler);
+                    dropdown.removeEventListener('mouseenter', desktopEnterHandler);
+                    dropdown.removeEventListener('mouseleave', desktopLeaveHandler);
+
+                    // Mobile behavior
+                    if (isMobile) {
+                        link.addEventListener('click', mobileClickHandler);
+                    } 
+                    // Desktop behavior
+                    else {
+                        dropdown.addEventListener('mouseenter', desktopEnterHandler);
+                        dropdown.addEventListener('mouseleave', desktopLeaveHandler);
+                    }
+                });
+            }
+
+            function mobileClickHandler(e) {
+                e.preventDefault();
+                const currentDropdown = this.parentElement;
+                const wasActive = currentDropdown.classList.contains('active');
+                
+                // Close all dropdowns first
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+                
+                // Open current if it wasn't active
+                if (!wasActive) {
+                    currentDropdown.classList.add('active');
+                }
+            }
+
+            function desktopEnterHandler() {
+                // Close all others
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+                // Open current
+                this.classList.add('active');
+            }
+
+            function desktopLeaveHandler() {
+                this.classList.remove('active');
+            }
+
+            // Close all when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+
+            // Handle resize
+            window.addEventListener('resize', function() {
+                isMobile = window.innerWidth <= 768;
+                setupDropdowns();
+            });
+
+            // Initialize
+            setupDropdowns();
         });
     </script>
 </body>

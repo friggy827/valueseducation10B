@@ -54,3 +54,9 @@
     transform: rotate(45deg);
     margin-left: 2px;
   }
+  
+  @media (max-width: 768px) {
+    .dropdown.active .dropdown-content {
+        display: block;
+    }
+}

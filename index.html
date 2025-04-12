@@ -70,6 +70,7 @@
         
         nav li {
             margin: 3px 8px;
+            position: relative;
         }
         
         nav a {
@@ -79,10 +80,40 @@
             padding: 5px 8px;
             border-radius: 4px;
             transition: background-color 0.3s;
+            display: block;
         }
         
         nav a:hover {
             background-color: #1a3e72;
+        }
+        
+        /* Dropdown Styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #0d2b56;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0 0 4px 4px;
+            left: 0;
+        }
+        
+        .dropdown-content a {
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-size: 0.8rem;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #1a3e72;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
         
         /* Main Content */
@@ -259,6 +290,23 @@
                 max-height: 500px;
             }
         }
+
+        /* Mobile Dropdown */
+        @media (max-width: 768px) {
+            .dropdown-content {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+            }
+            
+            .dropdown:hover .dropdown-content {
+                display: none;
+            }
+            
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
@@ -275,11 +323,57 @@
     <nav>
         <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#">Group 1</a></li>
-            <li><a href="#">Group 2</a></li>
-            <li><a href="#">Group 3</a></li>
-            <li><a href="#">Group 4</a></li>
-            <li><a href="#">Group 5</a></li>
+            
+            <!-- Group 1 Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Group 1 ▾</a>
+                <div class="dropdown-content">
+                    <a href="#">Juan Dela Cruz</a>
+                    <a href="#">Maria Santos</a>
+                    <a href="#">Pedro Bautista</a>
+                    <!-- Add more members -->
+                </div>
+            </li>
+            
+            <!-- Group 2 Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Group 2 ▾</a>
+                <div class="dropdown-content">
+                    <a href="#">Ana Reyes</a>
+                    <a href="#">Luis Gonzales</a>
+                    <!-- Add more members -->
+                </div>
+            </li>
+            
+            <!-- Group 3 Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Group 3 ▾</a>
+                <div class="dropdown-content">
+                    <a href="#">Carlos Lim</a>
+                    <a href="#">Elena Tan</a>
+                    <!-- Add more members -->
+                </div>
+            </li>
+            
+            <!-- Group 4 Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Group 4 ▾</a>
+                <div class="dropdown-content">
+                    <a href="#">Miguel Sy</a>
+                    <a href="#">Isabel Ong</a>
+                    <!-- Add more members -->
+                </div>
+            </li>
+            
+            <!-- Group 5 Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Group 5 ▾</a>
+                <div class="dropdown-content">
+                    <a href="#">Gabriel Uy</a>
+                    <a href="#">Sophia Co</a>
+                    <!-- Add more members -->
+                </div>
+            </li>
         </ul>
     </nav>
     
@@ -345,38 +439,32 @@
         startAutoAdvance();
         
         function showSlides(n) {
-            const slides = document.getElementsByClassName("slide");
-            const dots = document.getElementsByClassName("dot");
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
             
-            if (n > slides.length) { slideIndex = 1 }
-            if (n < 1) { slideIndex = slides.length }
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
             
-            // Hide all slides
-            for (let slide of slides) {
-                slide.style.display = "none";
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
             }
             
-            // Update dots
-            for (let dot of dots) {
-                dot.classList.remove("active");
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
             }
             
-            // Show current slide
             slides[slideIndex-1].style.display = "block";
-            dots[slideIndex-1].classList.add("active");
+            dots[slideIndex-1].className += " active";
         }
         
         // Navigation functions
         function plusSlides(n) {
-            pauseAutoAdvance();
             showSlides(slideIndex += n);
-            resumeAutoAdvance();
         }
         
         function currentSlide(n) {
-            pauseAutoAdvance();
             showSlides(slideIndex = n);
-            resumeAutoAdvance();
         }
         
         // Auto-advance control
@@ -423,6 +511,16 @@
         window.addEventListener('resize', () => {
             clearInterval(slideInterval);
             startAutoAdvance();
+        });
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown > a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                }
+            });
         });
     </script>
 </body>

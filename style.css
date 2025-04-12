@@ -59,4 +59,19 @@
     .dropdown.active .dropdown-content {
         display: block;
     }
+    .dropdown .dropdown-content {
+        display: none;
+    }
+}
+
+.dropdown-content {
+  transition: opacity 0.3s, max-height 0.3s;
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+}
+
+.dropdown.active .dropdown-content {
+  opacity: 1;
+  max-height: 500px; /* Adjust based on content */
 }

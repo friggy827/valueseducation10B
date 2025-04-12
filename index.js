@@ -1,48 +1,64 @@
-// Handle dropdowns for both mobile and desktop
-function setupDropdowns() {
+// ===== DROPDOWN ACCORDION (MOBILE) + HOVER (DESKTOP) ===== //
+document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
-    const isMobile = window.innerWidth <= 768;
+    let isMobile = window.innerWidth <= 768;
 
-    dropdowns.forEach(dropdown => {
-        const link = dropdown.querySelector('a');
-        const content = dropdown.querySelector('.dropdown-content');
+    // Handle clicks/hovers
+    function handleDropdownInteractions() {
+        dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('a');
+            const content = dropdown.querySelector('.dropdown-content');
 
-        // Click handler for mobile
-        if (isMobile) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Close all other dropdowns first
-                dropdowns.forEach(otherDropdown => {
-                    if (otherDropdown !== dropdown) {
-                        otherDropdown.classList.remove('active');
-                    }
+            // MOBILE: Click to toggle (accordion behavior)
+            if (isMobile) {
+                // Remove hover events first
+                dropdown.removeEventListener('mouseenter', showDropdown);
+                dropdown.removeEventListener('mouseleave', hideDropdown);
+
+                // Click event
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation(); // Prevent document click from closing immediately
+
+                    // Close all other dropdowns
+                    dropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.classList.remove('active');
+                        }
+                    });
+
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('active');
                 });
-                
-                // Toggle current dropdown
-                dropdown.classList.toggle('active');
-            });
-        }
-        // Hover handler for desktop
-        else {
-            dropdown.addEventListener('mouseenter', function() {
-                // Close all other dropdowns
-                dropdowns.forEach(otherDropdown => {
-                    if (otherDropdown !== dropdown) {
-                        otherDropdown.classList.remove('active');
-                    }
-                });
-                // Open current dropdown
-                dropdown.classList.add('active');
-            });
+            }
+            // DESKTOP: Hover to show
+            else {
+                // Remove click events first
+                link.removeEventListener('click', handleClick);
 
-            dropdown.addEventListener('mouseleave', function() {
-                dropdown.classList.remove('active');
-            });
-        }
-    });
+                // Hover events
+                dropdown.addEventListener('mouseenter', showDropdown);
+                dropdown.addEventListener('mouseleave', hideDropdown);
+            }
+        });
+    }
 
-    // Close all dropdowns when clicking outside
+    // Show dropdown (desktop)
+    function showDropdown() {
+        // Close all others first
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+        // Open current
+        this.classList.add('active');
+    }
+
+    // Hide dropdown (desktop)
+    function hideDropdown() {
+        this.classList.remove('active');
+    }
+
+    // Close all when clicking outside (both mobile + desktop)
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
@@ -50,8 +66,11 @@ function setupDropdowns() {
             });
         }
     });
-}
 
-// Initialize and re-run on resize
-setupDropdowns();
-window.addEventListener('resize', setupDropdowns);
+    // Initialize and update on resize
+    handleDropdownInteractions();
+    window.addEventListener('resize', function() {
+        isMobile = window.innerWidth <= 768;
+        handleDropdownInteractions();
+    });
+});

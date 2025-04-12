@@ -65,12 +65,20 @@
   }
 }
 
-/* Desktop dropdown styles */
-@media (min-width: 769px) {
-  .dropdown-content {
-      display: none;
-      position: absolute;
+/* Ensure dropdowns are hidden by default */
+.dropdown-content {
+  display: none;
+}
+
+/* Mobile: Only show when .active */
+@media (max-width: 768px) {
+  .dropdown.active .dropdown-content {
+      display: block;
   }
+}
+
+/* Desktop: Show on hover OR when .active */
+@media (min-width: 769px) {
   .dropdown:hover .dropdown-content,
   .dropdown.active .dropdown-content {
       display: block;

@@ -112,7 +112,7 @@
             background-color: #1a3e72;
         }
         
-        .dropdown:hover .dropdown-content {
+        .dropdown.active .dropdown-content {
             display: block;
         }
         
@@ -298,44 +298,13 @@
                 width: 100%;
                 box-shadow: none;
             }
-            
-            .dropdown:hover .dropdown-content {
-                display: none;
-            }
-            
-            .dropdown.active .dropdown-content {
-                display: block;
-            }
         }
-    </style>
-    <style>
-        /* [All previous CSS remains the same until dropdown styles] */
-
-        /* Dropdown Styles - UPDATED */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #0d2b56;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
-            border-radius: 0 0 4px 4px;
-            left: 0;
-        }
-        
-        /* REMOVED: .dropdown:hover .dropdown-content (conflicts with JS) */
-        
-        .dropdown.active .dropdown-content {
-            display: block;
-        }
-
-        /* [Rest of existing CSS remains the same] */
     </style>
 </head>
 <body>
     <header>
         <div class="logo-container">
-            <img src="cksc logo.jpg" alt="CKSC Logo" class="logo">
+            <img src="cksc-logo.jpg" alt="CKSC Logo" class="logo">
             <div class="header-text">
                 <h1>VALUES EDUCATION 10B</h1>
                 <p>Chiang Kai Shek College</p>
@@ -568,7 +537,7 @@
             
             <!-- Group 4 Dropdown -->
             <li class="dropdown">
-                <a href=" javascript:void(0)">Group 4 ▾</a>
+                <a href="javascript:void(0)">Group 4 ▾</a>
                 <div class="dropdown-content">
                     <button class="group-view-all">View All Group 4 Works</button>
                     <div class="member-links" id="group4-list">
@@ -666,7 +635,7 @@
                         </div>
                     </div>
                     
- <div id="gianna-work" class="member-work">
+                    <div id="gianna-work" class="member-work">
                         <a href="#group5-list" class="back-link">← Back to list</a>
                         <h4>Gianna Ting</h4>
                         <div class="work-content">
@@ -687,27 +656,27 @@
         <div class="slideshow-container">
             <!-- Slide 1 -->
             <div class="slide fade">
-                <img src="photo1.jpg" alt="Class Activity" loading="lazy">
+                <img src="images/photo1.jpg" alt="Class Activity" loading="lazy">
             </div>
             
             <!-- Slide 2 -->
             <div class="slide fade">
-                <img src="photo2.jpg" alt="Field Trip" loading="lazy">
+                <img src="images/photo2.jpg" alt="Field Trip" loading="lazy">
             </div>
 
             <!-- Slide 3 -->
             <div class="slide fade">
-                <img src="photo3.jpg" alt="Class Event" loading="lazy">
+                <img src="images/photo3.jpg" alt="Class Event" loading="lazy">
             </div>
 
             <!-- Slide 4 -->
             <div class="slide fade">
-                <img src="photo4.jpg" alt="Group Activity" loading="lazy">
+                <img src="images/photo4.jpg" alt="Group Activity" loading="lazy">
             </div>
 
             <!-- Slide 5 -->
             <div class="slide fade">
-                <img src="photo5.jpg" alt="School Project" loading="lazy">
+                <img src="images/photo5.jpg" alt="School Project" loading="lazy">
             </div>
             
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -729,7 +698,7 @@
     </footer>
     
     <script>
-        // Mobile-optimized slideshow with touch support
+        // ===== SLIDESHOW FUNCTIONALITY ===== //
         let slideIndex = 1;
         let touchStartX = 0;
         let touchEndX = 0;
@@ -740,18 +709,17 @@
         startAutoAdvance();
         
         function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("slide");
-            let dots = document.getElementsByClassName("dot");
+            const slides = document.getElementsByClassName("slide");
+            const dots = document.getElementsByClassName("dot");
             
             if (n > slides.length) {slideIndex = 1}
             if (n < 1) {slideIndex = slides.length}
             
-            for (i = 0; i < slides.length; i++) {
+            for (let i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
             
-            for (i = 0; i < dots.length; i++) {
+            for (let i = 0; i < dots.length; i++) {
                 dots[i].className = dots[i].className.replace(" active", "");
             }
             
@@ -759,7 +727,6 @@
             dots[slideIndex-1].className += " active";
         }
         
-        // Navigation functions
         function plusSlides(n) {
             showSlides(slideIndex += n);
         }
@@ -768,7 +735,6 @@
             showSlides(slideIndex = n);
         }
         
-        // Auto-advance control
         function startAutoAdvance() {
             const isMobile = window.matchMedia("(max-width: 768px)").matches;
             slideInterval = setInterval(() => {
@@ -799,131 +765,34 @@
         }, { passive: true });
         
         function handleSwipe() {
-            const threshold = 50; // Minimum swipe distance in pixels
+            const threshold = 50;
             
             if (touchEndX < touchStartX - threshold) {
-                plusSlides(1); // Swipe left = next slide
+                plusSlides(1);
             } else if (touchEndX > touchStartX + threshold) {
-                plusSlides(-1); // Swipe right = previous slide
+                plusSlides(-1);
             }
         }
         
-        // Handle screen resize
         window.addEventListener('resize', () => {
             clearInterval(slideInterval);
             startAutoAdvance();
         });
 
-        // Mobile dropdown toggle
-        document.querySelectorAll('.dropdown > a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    this.parentElement.classList.toggle('active');
-                }
-            });
-        });
-    </script>
-    <script>
-        // ===== SLIDESHOW CODE (keep existing) ===== //
-        // [Previous slideshow JavaScript remains exactly the same]
-
-        // ===== UPDATED DROPDOWN CODE ===== //
-        document.addEventListener('DOMContentLoaded', function() {
-            const dropdowns = document.querySelectorAll('.dropdown');
-            let isMobile = window.innerWidth <= 768;
-
-            function setupDropdowns() {
-                dropdowns.forEach(dropdown => {
-                    const link = dropdown.querySelector('a');
-                    
-                    // Remove previous event listeners
-                    link.removeEventListener('click', mobileClickHandler);
-                    dropdown.removeEventListener('mouseenter', desktopEnterHandler);
-                    dropdown.removeEventListener('mouseleave', desktopLeaveHandler);
-
-                    // Mobile behavior
-                    if (isMobile) {
-                        link.addEventListener('click', mobileClickHandler);
-                    } 
-                    // Desktop behavior
-                    else {
-                        dropdown.addEventListener('mouseenter', desktopEnterHandler);
-                        dropdown.addEventListener('mouseleave', desktopLeaveHandler);
-                    }
-                });
-            }
-
-            function mobileClickHandler(e) {
-                e.preventDefault();
-                const currentDropdown = this.parentElement;
-                const wasActive = currentDropdown.classList.contains('active');
-                
-                // Close all dropdowns first
-                dropdowns.forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-                
-                // Open current if it wasn't active
-                if (!wasActive) {
-                    currentDropdown.classList.add('active');
-                }
-            }
-
-            function desktopEnterHandler() {
-                // Close all others
-                dropdowns.forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-                // Open current
-                this.classList.add('active');
-            }
-
-            function desktopLeaveHandler() {
-                this.classList.remove('active');
-            }
-
-            // Close all when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.dropdown')) {
-                    dropdowns.forEach(dropdown => {
-                        dropdown.classList.remove('active');
-                    });
-                }
-            });
-
-            // Handle resize
-            window.addEventListener('resize', function() {
-                isMobile = window.innerWidth <= 768;
-                setupDropdowns();
-            });
-
-            // Initialize
-            setupDropdowns();
-        });
-    </script>
-    <script>
-        // ===== FOOLPROOF DROPDOWN SOLUTION ===== //
+        // ===== DROPDOWN FUNCTIONALITY ===== //
         document.addEventListener('DOMContentLoaded', function() {
             const dropdowns = document.querySelectorAll('.dropdown');
             
-            // Better mobile detection
             function isMobileView() {
                 return window.matchMedia('(max-width: 768px)').matches;
             }
             
-            // Track current open dropdown
-            let currentOpenDropdown = null;
-            
-            // Close all dropdowns
             function closeAllDropdowns() {
                 dropdowns.forEach(dropdown => {
                     dropdown.classList.remove('active');
                 });
-                currentOpenDropdown = null;
             }
             
-            // Setup dropdown behavior
             function setupDropdownBehavior() {
                 dropdowns.forEach(dropdown => {
                     const link = dropdown.querySelector('a');
@@ -939,16 +808,12 @@
                             e.preventDefault();
                             e.stopPropagation();
                             
-                            // If clicking the already open dropdown, close it
-                            if (currentOpenDropdown === dropdown) {
-                                closeAllDropdowns();
-                                return;
-                            }
-                            
-                            // Otherwise open this dropdown
+                            // Toggle this dropdown
+                            const isActive = dropdown.classList.contains('active');
                             closeAllDropdowns();
-                            dropdown.classList.add('active');
-                            currentOpenDropdown = dropdown;
+                            if (!isActive) {
+                                dropdown.classList.add('active');
+                            }
                         };
                     } 
                     // Desktop behavior
@@ -956,7 +821,6 @@
                         dropdown.onmouseenter = function() {
                             closeAllDropdowns();
                             dropdown.classList.add('active');
-                            currentOpenDropdown = dropdown;
                         };
                         
                         dropdown.onmouseleave = function() {
@@ -974,17 +838,11 @@
             });
             
             // Handle window resize
-            window.addEventListener('resize', function() {
-                setupDropdownBehavior();
-            });
+            window.addEventListener('resize', setupDropdownBehavior);
             
             // Initial setup
             setupDropdownBehavior();
-            
-            console.log('Dropdown system ready');
         });
-        
-        // Keep your existing slideshow code here
-        </script>
+    </script>
 </body>
 </html>

@@ -411,7 +411,7 @@
                 <div class="dropdown-content">
                     <button class="group-view-all">View All Group 1 Works</button>
                     <div class="member-links" id="group1-list">
-                        <a href="#arnold-work" class="member-link">#1 Arnold Ang</a>
+                        <a href="javascript:void(0)" class="member-link" data-student="arnold">#1 Arnold Ang</a>
                         <a href="#peter-work" class="member-link">#6 Peter Li</a>
                         <a href="#yules-work" class="member-link">#15 Yules Wong</a>
                         <a href="#alaina-work" class="member-link">#24 Alaina Lim</a>
@@ -945,5 +945,11 @@
             setupDropdownBehavior();
         });
     </script>
+    <div class="popup-overlay" id="popup">
+        <div class="popup-content">
+          <span class="close-popup">&times;</span>
+          <div id="popup-content-container"></div>
+        </div>
+      </div>
 </body>
 </html>

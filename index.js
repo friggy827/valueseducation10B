@@ -1,166 +1,221 @@
-// ===== COMBINED SYSTEM =====
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Initialize variables
-    const dropdowns = document.querySelectorAll('.dropdown');
-    let isMobile = window.innerWidth <= 768;
-
-    // 2. Core dropdown functions
-    function closeAllDropdowns(exceptThis = null) {
-        dropdowns.forEach(dropdown => {
-            if (exceptThis && dropdown === exceptThis) return;
-            dropdown.classList.remove('active');
-            
-            // Reset view mode when closing
-            const content = dropdown.querySelector('.dropdown-content');
-            if (content) {
-                content.classList.remove('view-all-mode');
-                const btn = content.querySelector('.group-view-all');
-                if (btn) btn.textContent = 'View All Group Works';
-            }
-        });
-    }
-
-    // 3. Work section functions
-    function showWorkSection(id) {
-        // Close all works first
-        document.querySelectorAll('.member-work').forEach(work => {
-            work.classList.remove('active');
-        });
-        
-        // Show the requested one
-        const targetWork = document.getElementById(id);
-        if (targetWork) {
-            targetWork.classList.add('active');
-            setTimeout(() => {
-                targetWork.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }, 100);
-        }
-    }
-
-    // 4. Unified event handlers
-    function handleMemberLinkClick(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        
-        // Update URL
-        history.pushState(null, null, '#' + targetId);
-        
-        // Show the work section
-        showWorkSection(targetId);
-        
-        // Reset view all mode
-        const dropdownContent = this.closest('.dropdown-content');
-        if (dropdownContent) {
-            dropdownContent.classList.remove('view-all-mode');
-            const btn = dropdownContent.querySelector('.group-view-all');
-            if (btn) btn.textContent = 'View All Group Works';
-        }
-    }
-
-    function handleBackLinkClick(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        history.pushState(null, null, '#');
-        
-        // Close all works
-        document.querySelectorAll('.member-work').forEach(work => {
-            work.classList.remove('active');
-        });
-        
-        // Scroll to list
-        document.getElementById(targetId).scrollIntoView({
-            behavior: 'smooth'
-        });
-    }
-
-    // 5. Setup functions
-    function setupDropdowns() {
-        dropdowns.forEach(dropdown => {
-            const link = dropdown.querySelector('a');
-            
-            if (isMobile) {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const wasActive = this.parentElement.classList.contains('active');
-                    closeAllDropdowns();
-                    if (!wasActive) this.parentElement.classList.add('active');
-                });
-            } else {
-                dropdown.addEventListener('mouseenter', function() {
-                    closeAllDropdowns();
-                    this.classList.add('active');
-                });
-                
-                dropdown.addEventListener('mouseleave', function() {
-                    this.classList.remove('active');
-                });
-            }
-        });
-    }
-
-    function setupMemberWorks() {
-        // View All toggle
-        document.querySelectorAll('.group-view-all').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const dropdownContent = this.closest('.dropdown-content');
-                dropdownContent.classList.toggle('view-all-mode');
-                
-                this.textContent = dropdownContent.classList.contains('view-all-mode') 
-                    ? 'Show Individual View' 
-                    : 'View All Group Works';
-                
-                dropdownContent.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-
-        // Member links
-        document.querySelectorAll('.member-link').forEach(link => {
-            link.addEventListener('click', handleMemberLinkClick);
-        });
-
-        // Back links
-        document.querySelectorAll('.back-link').forEach(link => {
-            link.addEventListener('click', handleBackLinkClick);
-        });
-    }
-
-    // 6. Event listeners
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            closeAllDropdowns();
-        }
-    });
-
-    window.addEventListener('resize', function() {
-        const nowMobile = window.innerWidth <= 768;
-        if (nowMobile !== isMobile) {
-            isMobile = nowMobile;
-            setupDropdowns();
-        }
-    });
-
-    window.addEventListener('popstate', function() {
-        if (window.location.hash) {
-            showWorkSection(window.location.hash.substring(1));
-        } else {
-            document.querySelectorAll('.member-work').forEach(work => {
-                work.classList.remove('active');
-            });
-        }
-    });
-
-    // 7. Initial setup
-    setupDropdowns();
-    setupMemberWorks();
+    const popup = document.getElementById('popup');
+    const popupContent = document.getElementById('popup-content-container');
     
-    // Handle initial page load with hash
-    if (window.location.hash) {
-        showWorkSection(window.location.hash.substring(1));
-    }
-
-    console.log('Combined system initialized successfully');
-});
+    // Student data for all groups
+    const studentWorks = {
+      // ===== GROUP 1 =====
+      arnold: `
+        <div class="student-profile">
+          <img src="https://drive.google.com/uc?export=view&id=1BP_dAnQuOVgpRuaSoOM9L4yTSG-al1gB" 
+               class="student-photo"
+               alt="Arnold Ang">
+          <div class="student-info">
+            <h4>Arnold Ang</h4>
+            <div class="student-id">#1 | Group 1</div>
+            <div class="work-content">
+              <div class="work-section">
+                <h5>Cultural Harmony Project</h5>
+                <p>"This project explores the intersection of Filipino and Chinese values in our community..."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      peter: `
+        <div class="student-profile">
+          <img src="https://via.placeholder.com/150" 
+               class="student-photo"
+               alt="Peter Li">
+          <div class="student-info">
+            <h4>Peter Li</h4>
+            <div class="student-id">#6 | Group 1</div>
+            <div class="work-content">
+              <div class="work-section">
+                <h5>Honesty Journal</h5>
+                <p>"My weekly honesty journal tracks situations where I chose integrity..."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      // ===== GROUP 2 =====
+      hendrix: `
+        <div class="student-profile">
+          <img src="https://via.placeholder.com/150" 
+               class="student-photo"
+               alt="Hendrix Escolar">
+          <div class="student-info">
+            <h4>Hendrix Escolar</h4>
+            <div class="student-id">#2 | Group 2</div>
+            <div class="work-content">
+              <div class="work-section">
+                <h5>Web Accessibility</h5>
+                <p>"Redesigning our school website taught me that technology must serve everyone..."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      schuyler: `
+        <div class="student-profile">
+          <img src="https://via.placeholder.com/150" 
+               class="student-photo"
+               alt="Schuyler Li">
+          <div class="student-info">
+            <h4>Schuyler Li</h4>
+            <div class="student-id">#7 | Group 2</div>
+            <div class="work-content">
+              <div class="work-section">
+                <h5>Environmental Ethics</h5>
+                <p>"Our family business switched to sustainable packaging..."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      // ===== GROUP 3 =====
+      jerome: `
+        <div class="student-profile">
+          <img src="https://via.placeholder.com/150" 
+               class="student-photo"
+               alt="Jerome Go">
+          <div class="student-info">
+            <h4>Jerome Go</h4>
+            <div class="student-id">#3 | Group 3</div>
+            <div class="work-content">
+              <div class="work-section">
+                <h5>Sportsmanship Values</h5>
+                <p>"As basketball team captain, I've learned leadership means elevating everyone..."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      martin: `
+        <div class="student-profile">
+          <img src="https://via.placeholder.com/150" 
+               class="student-photo"
+               alt="Martin Lim">
+          <div class="student-info">
+            <h4>Martin Lim</h4>
+            <div class="student-id">#8 | Group 3</div>
+            <div class="work-content">
+              <div class="work-section">
+                <h5>Financial Ethics</h5>
+                <p>"Analyzing the 2008 financial crisis showed how short-term profits can destroy trust..."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      // ===== GROUP 4 =====
+      jazz: `
+        <div class="student-profile">
+          <img src="https://via.placeholder.com/150" 
+               class="student-photo"
+               alt="Jazz Ibo">
+          <div class="student-info">
+            <h4>Jazz Ibo</h4>
+            <div class="student-id">#4 | Group 4</div>
+            <div class="work-content">
+              <div class="work-section">
+                <h5>Creative Storytelling</h5>
+                <p>"My project uses modern animation techniques to retell traditional folk tales..."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      elvis: `
+        <div class="student-profile">
+          <img src="https://via.placeholder.com/150" 
+               class="student-photo"
+               alt="Elvis Lu">
+          <div class="student-info">
+            <h4>Elvis Lu</h4>
+            <div class="student-id">#9 | Group 4</div>
+            <div class="work-content">
+              <div class="work-section">
+                <h5>Music and Values</h5>
+                <p>"I composed original songs that represent different moral values..."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      // ===== GROUP 5 =====
+      einer: `
+        <div class="student-profile">
+          <img src="https://via.placeholder.com/150" 
+               class="student-photo"
+               alt="Einer Lagamayo">
+          <div class="student-info">
+            <h4>Einer Lagamayo</h4>
+            <div class="student-id">#5 | Group 5</div>
+            <div class="work-content">
+              <div class="work-section">
+                <h5>Community Service</h5>
+                <p>"Organized a neighborhood clean-up program involving 50+ volunteers..."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      wawai: `
+        <div class="student-profile">
+          <img src="https://via.placeholder.com/150" 
+               class="student-photo"
+               alt="Wawai Qui">
+          <div class="student-info">
+            <h4>Wawai Qui</h4>
+            <div class="student-id">#10 | Group 5</div>
+            <div class="work-content">
+              <div class="work-section">
+                <h5>Cultural Preservation</h5>
+                <p>"Documented traditional crafts from our indigenous communities..."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+      // Add other students following the same pattern...
+    };
+  
+    // Open popup
+    document.querySelectorAll('.member-link').forEach(link => {
+      link.addEventListener('click', function() {
+        const student = this.dataset.student;
+        if (studentWorks[student]) {
+          popupContent.innerHTML = studentWorks[student];
+          popup.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        } else {
+          popupContent.innerHTML = `<p>Content not available yet for this student.</p>`;
+          popup.style.display = 'flex';
+        }
+      });
+    });
+  
+    // Close popup
+    document.querySelector('.close-popup').addEventListener('click', function() {
+      popup.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+  
+    // Close when clicking outside
+    popup.addEventListener('click', function(e) {
+      if (e.target === popup) {
+        popup.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+  
+    // Close with ESC key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && popup.style.display === 'flex') {
+        popup.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+  });

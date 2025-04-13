@@ -1,34 +1,50 @@
-// Simple Popup System
 document.addEventListener('DOMContentLoaded', function() {
     const popup = document.getElementById('popup');
     const popupContent = document.getElementById('popup-content-container');
+    const closeBtn = document.querySelector('.close-popup');
     
-    // Convert existing member-work divs into templates
+    // Store templates
     const studentTemplates = {};
+    
+    // Get all member work sections
     document.querySelectorAll('.member-work').forEach(work => {
-      const id = work.id.replace('-work', '');
-      studentTemplates[id] = work.innerHTML;
-      work.remove(); // Remove original divs
+        const id = work.id;
+        studentTemplates[id] = work.innerHTML;
     });
-  
-    // Click handler for all member links
+
+    // Click handler for member links
     document.querySelectorAll('.member-link').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const studentId = this.getAttribute('data-student');
-        popupContent.innerHTML = studentTemplates[studentId];
-        popup.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      });
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const studentId = this.getAttribute('href').replace('#', '');
+            
+            if (studentTemplates[studentId]) {
+                popupContent.innerHTML = studentTemplates[studentId];
+                popup.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        });
     });
-  
+
     // Close handlers
-    document.querySelector('.close-popup').addEventListener('click', closePopup);
-    popup.addEventListener('click', e => e.target === popup && closePopup());
-    document.addEventListener('keydown', e => e.key === 'Escape' && closePopup());
-  
-    function closePopup() {
-      popup.style.display = 'none';
-      document.body.style.overflow = 'auto';
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closePopup);
     }
-  });
+    
+    popup.addEventListener('click', function(e) {
+        if (e.target === popup) {
+            closePopup();
+        }
+    });
+    
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closePopup();
+        }
+    });
+
+    function closePopup() {
+        popup.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+});

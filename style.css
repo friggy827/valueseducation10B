@@ -70,63 +70,114 @@
   border-right: 3px solid #1a3e72;
 }
 
-/* ===== DROPDOWNS ===== */
-/* Mobile styles (optimized) */
-@media (max-width: 768px) {
-  .dropdown-content {
-    display: none;
-    position: static;
-    width: 100%;
-    box-shadow: none;
-    /* Added for better mobile appearance */
-    padding: 5px 0;
-    background: #0d2b56;
-  }
-  
-  .dropdown.active .dropdown-content {
-    display: block;
-    animation: fadeIn 0.3s ease; /* Added animation */
-  }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #0d2b56;
+  min-width: 250px; /* Wider for better content display */
+  max-height: 70vh;
+  overflow-y: auto;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 0 0 4px 4px;
+  left: 0;
+  padding: 10px;
 }
 
-/* Desktop styles (optimized) */
-@media (min-width: 769px) {
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    min-width: 200px; /* More readable */
-    left: 0;
-    top: 100%;
-    animation: fadeIn 0.2s ease;
-  }
-  
-  .dropdown:hover .dropdown-content,
-  .dropdown.active .dropdown-content {
-    display: block;
-  }
+.dropdown.active .dropdown-content {
+  display: block;
 }
 
-/* Dropdown animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Active state - improved visibility */
-.dropdown.active > a {
+/* Member Works System */
+.group-view-all {
   background: #1a4e8c;
   color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  margin: 0 auto 10px;
+  display: block;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 0.8rem;
 }
 
-/* ===== GENERAL IMPROVEMENTS ===== */
-/* Added for better dropdown links */
-.dropdown-content a {
-  padding: 10px 15px; /* More tap-friendly */
-  transition: background 0.2s;
+.group-view-all:hover {
+  background: #2a5e9c;
 }
 
-/* Added focus states for accessibility */
-a:focus, button:focus {
-  outline: 2px solid #1a3e72;
-  outline-offset: 2px;
+.member-links {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-bottom: 1px solid #2a4e8c;
+  padding-bottom: 10px;
 }
+
+.member-link {
+  color: #a0c4ff;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.member-link:hover {
+  background: rgba(160, 196, 255, 0.1);
+}
+
+.member-work {
+  display: none;
+  padding: 15px 0;
+  animation: fadeIn 0.3s ease;
+}
+
+.member-work:target,
+.view-all-mode .member-work {
+  display: block;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.back-link {
+  display: inline-block;
+  color: #a0c4ff;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.work-content {
+  padding: 0 10px;
+}
+
+.work-content img {
+  max-width: 100%;
+  border-radius: 4px;
+  margin: 10px 0;
+  border: 1px solid #1a3e72;
+}
+
+/* Mobile adaptations */
+@media (max-width: 768px) {
+  .dropdown-content {
+    position: static;
+    width: 100%;
+    max-height: 50vh;
+  }
+  
+  .back-link {
+    position: sticky;
+    top: 0;
+    background: #0d2b56;
+    z-index: 1;
+  }
+}
+

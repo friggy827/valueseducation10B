@@ -117,3 +117,21 @@
     transform: rotate(180deg);
   }
 }
+
+/* NEW: Desktop hover behavior */
+@media (min-width: 769px) {
+  .dropdown:hover .dropdown-content {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+  }
+  .dropdown.active .dropdown-content {
+      display: none !important; /* Disables click-toggle on desktop */
+  }
+}
+
+/* NEW: Mobile arrow toggles */
+@media (max-width: 768px) {
+  .dropdown > a::after { content: " ▾"; }
+  .dropdown.active > a::after { content: " ▴"; }
+}

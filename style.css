@@ -193,3 +193,8 @@ nav a {
   color: #666;
   font-size: 0.9em;
 }
+
+.back-link:hover {
+  color: #0d2b56;
+  text-decoration: underline;
+}

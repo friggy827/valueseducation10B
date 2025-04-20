@@ -1,3 +1,64 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Create View All button for each group
+    const groupLists = document.querySelectorAll('.dropdown-content .member-links');
+    
+    groupLists.forEach(group => {
+        const groupId = group.id;
+        const groupNumber = groupId.replace('group', '').replace('-list', '');
+        const dropdown = group.closest('.dropdown');
+        
+        // Create View All button
+        const viewAllBtn = document.createElement('button');
+        viewAllBtn.className = 'view-works-btn';
+        viewAllBtn.textContent = 'View All Group ' + groupNumber + ' Works';
+        viewAllBtn.dataset.group = groupNumber;
+        
+        // Insert button after the dropdown content
+        dropdown.querySelector('.dropdown-content').appendChild(viewAllBtn);
+        
+        // Add click event
+        viewAllBtn.addEventListener('click', function() {
+            const isShowingAll = document.body.classList.contains('show-all-' + groupNumber);
+            
+            if (isShowingAll) {
+                // Hide all works
+                document.body.classList.remove('show-all-' + groupNumber);
+                viewAllBtn.textContent = 'View All Group ' + groupNumber + ' Works';
+            } else {
+                // Show all works
+                document.body.classList.add('show-all-' + groupNumber);
+                viewAllBtn.textContent = 'Hide Group ' + groupNumber + ' Works';
+                
+                // Scroll to view the button
+                viewAllBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    });
+
+    // Update CSS selector to target specific groups
+    const style = document.createElement('style');
+    style.textContent = `
+        .show-all-1 #group1-list ~ .view-works-btn + .member-work[data-group="1"],
+        .show-all-2 #group2-list ~ .view-works-btn + .member-work[data-group="2"],
+        .show-all-3 #group3-list ~ .view-works-btn + .member-work[data-group="3"],
+        .show-all-4 #group4-list ~ .view-works-btn + .member-work[data-group="4"],
+        .show-all-5 #group5-list ~ .view-works-btn + .member-work[data-group="5"] {
+            display: block;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Add data-group attribute to member works
+    document.querySelectorAll('.member-work').forEach(work => {
+        const studentId = work.id.replace('-work', '');
+        const groupLink = document.querySelector(`.member-link[data-student="${studentId}"]`);
+        if (groupLink) {
+            const group = groupLink.closest('.member-links').id.replace('group', '').replace('-list', '');
+            work.dataset.group = group;
+        }
+    });
+});
+
 // SLIDESHOW FUNCTIONALITY
 let slideIndex = 1;
 let slideInterval;
@@ -217,36 +278,3 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = 'auto';
     }
 });
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Add View All buttons to each member card with multiple works
-    const memberCards = document.querySelectorAll('.member-card');
-    
-    memberCards.forEach(card => {
-      const worksList = card.querySelector('.member-works');
-      
-      // Only add button if there are works to show/hide
-      if (worksList && worksList.querySelectorAll('li').length > 3) {
-        const btn = document.createElement('button');
-        btn.className = 'view-works-btn';
-        btn.textContent = 'View All Works';
-        
-        // Insert button after the works list
-        worksList.parentNode.insertBefore(btn, worksList.nextSibling);
-        
-        // Toggle functionality
-        btn.addEventListener('click', function() {
-          card.classList.toggle('show-all');
-          
-          // Update button text
-          if (card.classList.contains('show-all')) {
-            btn.textContent = 'Show Less';
-            // Optional: scroll to show all works
-            card.scrollIntoView({behavior: 'smooth', block: 'nearest'});
-          } else {
-            btn.textContent = 'View All Works';
-          }
-        });
-      }
-    });
-  });

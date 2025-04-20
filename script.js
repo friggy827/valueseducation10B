@@ -92,6 +92,9 @@ function initializeMemberPopups() {
 
     function showPopup(content) {
         popupContent.innerHTML = content;
+        // RESET SCROLL POSITION FIRST
+        popupContent.scrollTop = 0;
+        // THEN SHOW POPUP
         popup.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
@@ -181,6 +184,31 @@ function initializeGroupViewAll() {
             e.preventDefault();
             e.stopPropagation();
             
+            const popup = document.getElementById('popup');
+            const popupContent = document.getElementById('popup-content-container');
+            const works = Array.from(document.querySelectorAll(`.member-work[data-group="${groupNum}"]`));
+            
+            if (works.length === 0) return;
+            
+            popupContent.innerHTML = `
+                <div class="group-works-container">
+                    <h2>Group ${groupNum} Works</h2>
+                    ${works.map(work => `
+                        <div class="group-work-entry">
+                            <h3>${work.querySelector('.student-info h4')?.textContent || 'Student Work'}</h3>
+                            ${work.innerHTML}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            // RESET SCROLL POSITION FIRST
+            popupContent.scrollTop = 0;
+            // THEN SHOW POPUP
+            popup.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+            
             // Compile all works for this group
             const works = Array.from(document.querySelectorAll(`.member-work[data-group="${groupNum}"]`));
             if (works.length === 0) return;
@@ -204,7 +232,7 @@ function initializeGroupViewAll() {
             document.getElementById('popup').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         });
-    });
+    };
 
     // Tag works with groups
     document.querySelectorAll('.member-work').forEach(work => {
@@ -213,7 +241,6 @@ function initializeGroupViewAll() {
             ?.closest('.member-links')?.id?.match(/\d+/)?.[0];
         if (group) work.dataset.group = group;
     });
-}
 
 function showPopup(content) {
     const popupContent = document.getElementById('popup-content-container');

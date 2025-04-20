@@ -267,3 +267,8 @@ body[class*="show-group-"] .popup-overlay {
 .view-all-btn:hover {
   background: #0d2b56;
 }
+
+.popup-content-container {
+  scroll-behavior: smooth;
+  overflow-y: auto;
+}

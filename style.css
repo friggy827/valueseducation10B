@@ -253,22 +253,12 @@ body[class^="show-group-"] .popup-content {
   transform: translateY(-2px) !important;
 }
 
-@keyframes fadeIn {
-  from { 
-      opacity: 0;
-      transform: translateY(10px);
-  }
-  to { 
-      opacity: 1;
-      transform: translateY(0);
-  }
-}
+
 
 body[class^="show-group-"] .member-work {
   position: relative !important;
   z-index: 9999 !important;
 }
-
 
 body.show-group-1 #arnold-work,
 body.show-group-1 #peter-work,
@@ -313,4 +303,15 @@ body.show-group-5 #gianna-work {
     overflow: visible !important;
     visibility: visible !important;
     animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { 
+      opacity: 0;
+      transform: translateY(10px);
+  }
+  to { 
+      opacity: 1;
+      transform: translateY(0);
+  }
 }

@@ -1,9 +1,20 @@
-// MAIN INITIALIZATION
+// MAIN INITIALIZATION - UPDATED
 document.addEventListener('DOMContentLoaded', function() {
+    // Reset popup state first
+    const popup = document.getElementById('popup');
+    if (popup) {
+        popup.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    
+    // Clear any residual body classes
+    document.body.className = '';
+    
+    // Initialize features
     initializeSlideshow();
     initializeDropdowns();
     initializeMemberPopups();
-    initializeGroupViewAll();
+    initializeGroupViewAll(); // Only use this one, remove initializeViewAllButtons()
 });
 
 // SLIDESHOW FUNCTIONALITY
@@ -116,51 +127,6 @@ function initializeMemberPopups() {
     document.addEventListener('keydown', e => e.key === 'Escape' && closePopup());
 }
 
-// VIEW ALL BUTTONS FUNCTIONALITY
-function initializeViewAllButtons() {
-    // First unhide the works container
-    const worksContainer = document.querySelector('div[style*="display:none"]');
-    if (worksContainer) worksContainer.style.display = 'block';
-
-    // Create buttons for each group
-    document.querySelectorAll('.member-links').forEach(group => {
-        const groupNum = group.id.match(/\d+/)?.[0];
-        if (!groupNum) return;
-
-        const btn = document.createElement('button');
-        btn.className = 'view-works-btn';
-        btn.textContent = `View All Group ${groupNum} Works`;
-        btn.dataset.group = groupNum;
-        group.parentNode.insertBefore(btn, group.nextSibling);
-
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const popupContent = document.getElementById('popup-content-container');
-            
-            const showClass = `show-group-${groupNum}`;
-            const isShowing = document.body.classList.toggle(showClass);
-            btn.textContent = isShowing 
-                ? `Hide Group ${groupNum} Works` 
-                : `View All Group ${groupNum} Works`;
-
-            // Force update visibility
-            document.querySelectorAll(`.member-work[data-group="${groupNum}"]`).forEach(work => {
-                work.style.display = isShowing ? 'block' : 'none';
-            });
-        });
-    });
-
-    // Tag works with groups
-    document.querySelectorAll('.member-work').forEach(work => {
-        const studentId = work.id.split('-')[0];
-        const group = document.querySelector(`.member-link[data-student="${studentId}"]`)
-            ?.closest('.member-links')?.id?.match(/\d+/)?.[0];
-        if (group) work.dataset.group = group;
-    });
-}
-
 function initializeGroupViewAll() {
     // First unhide the works container
     const worksContainer = document.querySelector('div[style*="display:none"]');
@@ -186,21 +152,21 @@ function initializeGroupViewAll() {
             if (works.length === 0) return;
             
             // Create popup content
-            const popupContent = works.map(work => `
-                <div class="group-work-entry">
-                    <h3>${work.querySelector('.student-info h4')?.textContent || 'Student Work'}</h3>
-                    ${work.innerHTML}
-                </div>
-            `).join('');
-            
-            // Show in popup
-            document.getElementById('popup-content-container').innerHTML = `
+            const popupContent = document.getElementById('popup-content-container');
+            popupContent.innerHTML = `
                 <div class="group-works-container">
                     <h2>Group ${groupNum} Works</h2>
-                    ${popupContent}
+                    ${works.map(work => `
+                        <div class="group-work-entry">
+                            <h3>${work.querySelector('.student-info h4')?.textContent || 'Student Work'}</h3>
+                            ${work.innerHTML}
+                        </div>
+                    `).join('')}
                 </div>
             `;
             
+            // Reset scroll and show
+            popupContent.scrollTop = 0;
             document.getElementById('popup').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         });

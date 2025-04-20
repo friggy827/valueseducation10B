@@ -217,3 +217,36 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = 'auto';
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Add View All buttons to each member card with multiple works
+    const memberCards = document.querySelectorAll('.member-card');
+    
+    memberCards.forEach(card => {
+      const worksList = card.querySelector('.member-works');
+      
+      // Only add button if there are works to show/hide
+      if (worksList && worksList.querySelectorAll('li').length > 3) {
+        const btn = document.createElement('button');
+        btn.className = 'view-works-btn';
+        btn.textContent = 'View All Works';
+        
+        // Insert button after the works list
+        worksList.parentNode.insertBefore(btn, worksList.nextSibling);
+        
+        // Toggle functionality
+        btn.addEventListener('click', function() {
+          card.classList.toggle('show-all');
+          
+          // Update button text
+          if (card.classList.contains('show-all')) {
+            btn.textContent = 'Show Less';
+            // Optional: scroll to show all works
+            card.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+          } else {
+            btn.textContent = 'View All Works';
+          }
+        });
+      }
+    });
+  });

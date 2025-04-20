@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Add View All button to each group
+    // Add View All buttons to each group
     document.querySelectorAll('.member-links').forEach(group => {
         const groupNumber = group.id.replace('group', '').replace('-list', '');
         const button = document.createElement('button');
@@ -11,21 +11,34 @@ document.addEventListener('DOMContentLoaded', function() {
         // Insert button after member links
         group.parentNode.insertBefore(button, group.nextSibling);
         
-        button.addEventListener('click', function() {
-            const isActive = document.body.classList.toggle(`show-group-${groupNumber}`);
-            button.textContent = isActive 
-                ? `Hide Group ${groupNumber} Works` 
-                : `View All Group ${groupNumber} Works`;
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const groupClass = `show-group-${groupNumber}`;
+            const isShowing = document.body.classList.contains(groupClass);
+            
+            // Toggle the group class
+            document.body.classList.toggle(groupClass);
+            
+            // Update button text
+            button.textContent = isShowing 
+                ? `View All Group ${groupNumber} Works` 
+                : `Hide Group ${groupNumber} Works`;
         });
     });
 
     // Tag each work with its group
     document.querySelectorAll('.member-work').forEach(work => {
         const studentId = work.id.replace('-work', '');
-        const group = document.querySelector(`.member-link[data-student="${studentId}"]`)
-            ?.closest('.member-links')?.id
-            ?.replace('group', '')?.replace('-list', '');
-        if (group) work.dataset.group = group;
+        const memberLink = document.querySelector(`.member-link[data-student="${studentId}"]`);
+        
+        if (memberLink) {
+            const group = memberLink.closest('.member-links').id
+                          .replace('group', '')
+                          .replace('-list', '');
+            work.dataset.group = group;
+        }
     });
 });
 

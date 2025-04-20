@@ -232,20 +232,41 @@ nav a {
   to { opacity: 1; }
 }
 
-/* Hide works by default */
-.member-work { display: none; }
+/* Ensure member works are hidden by default */
+.member-work {
+  display: none !important; /* Important to override any other styles */
+}
 
-/* Show works when body has show-group-X class */
+/* Show works when their group is active */
 .show-group-1 [data-group="1"],
 .show-group-2 [data-group="2"],
 .show-group-3 [data-group="3"],
 .show-group-4 [data-group="4"],
 .show-group-5 [data-group="5"] {
-    display: block;
-    animation: fadeIn 0.3s ease;
+  display: block !important;
+  animation: fadeIn 0.3s ease;
 }
 
+/* Animation for smooth appearance */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Button styling */
+.view-works-btn {
+  background: #1a3e72;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 5px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+.view-works-btn:hover {
+  background: #0d2b56;
 }

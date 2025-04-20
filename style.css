@@ -268,3 +268,49 @@ body[class^="show-group-"] .member-work {
   position: relative !important;
   z-index: 9999 !important;
 }
+
+
+body.show-group-1 #arnold-work,
+body.show-group-1 #peter-work,
+body.show-group-1 #yules-work,
+body.show-group-1 #alaina-work,
+body.show-group-1 #chloe-work,
+body.show-group-1 #eunice-work,
+body.show-group-1 #doris-work,
+
+body.show-group-2 #hendrix-work,
+body.show-group-2 #schuyler-work,
+body.show-group-2 #lester-work,
+body.show-group-2 #ghabrielley-work,
+body.show-group-2 #hannah-work,
+body.show-group-2 #eisley-work,
+body.show-group-2 #jenny-work,
+
+body.show-group-3 #jerome-work,
+body.show-group-3 #martin-work,
+body.show-group-3 #anson-work,
+body.show-group-3 #alisha-work,
+body.show-group-3 #elana-work,
+body.show-group-3 #allison-work,
+body.show-group-3 #tiffany-work,
+
+body.show-group-4 #jazz-work,
+body.show-group-4 #elvis-work,
+body.show-group-4 #maximillian-work,
+body.show-group-4 #marjorie-work,
+body.show-group-4 #caitlyn-work,
+body.show-group-4 #sophia-work,
+
+body.show-group-5 #einer-work,
+body.show-group-5 #wawai-work,
+body.show-group-5 #melanie-work,
+body.show-group-5 #gianna-work {
+    display: block !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 9999 !important;
+    height: auto !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    animation: fadeIn 0.5s ease forwards;
+}

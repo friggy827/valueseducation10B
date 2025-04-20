@@ -2,8 +2,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     initializeSlideshow();
     initializeDropdowns();
-    initializePopup();
-    initializeViewAllButtons();
+    initializeMemberPopups();
+    initializeGroupViewAll();
 });
 
 // SLIDESHOW FUNCTIONALITY
@@ -83,34 +83,33 @@ function initializeDropdowns() {
 }
 
 // POPUP FUNCTIONALITY
-function initializePopup() {
+function initializeMemberPopups() {
     const popup = document.getElementById('popup');
     const popupContent = document.getElementById('popup-content-container');
     const closeBtn = document.querySelector('.close-popup');
     
     if (!popup || !popupContent) return;
 
-    const studentTemplates = {};
-    document.querySelectorAll('.member-work').forEach(work => {
-        studentTemplates[work.id] = work.innerHTML;
-    });
-
-    document.querySelectorAll('.member-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const content = studentTemplates[this.getAttribute('data-student') + '-work'];
-            if (content) {
-                popupContent.innerHTML = content;
-                popup.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-        });
-    });
+    function showPopup(content) {
+        popupContent.innerHTML = content;
+        popup.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
 
     function closePopup() {
         popup.style.display = 'none';
         document.body.style.overflow = 'auto';
     }
+
+    // Individual member popups
+    document.querySelectorAll('.member-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const studentId = this.getAttribute('data-student') + '-work';
+            const content = document.getElementById(studentId)?.innerHTML;
+            if (content) showPopup(content);
+        });
+    });
 
     closeBtn?.addEventListener('click', closePopup);
     popup.addEventListener('click', e => e.target === popup && closePopup());
@@ -148,6 +147,60 @@ function initializeViewAllButtons() {
             document.querySelectorAll(`.member-work[data-group="${groupNum}"]`).forEach(work => {
                 work.style.display = isShowing ? 'block' : 'none';
             });
+        });
+    });
+
+    // Tag works with groups
+    document.querySelectorAll('.member-work').forEach(work => {
+        const studentId = work.id.split('-')[0];
+        const group = document.querySelector(`.member-link[data-student="${studentId}"]`)
+            ?.closest('.member-links')?.id?.match(/\d+/)?.[0];
+        if (group) work.dataset.group = group;
+    });
+}
+
+function initializeGroupViewAll() {
+    // First unhide the works container
+    const worksContainer = document.querySelector('div[style*="display:none"]');
+    if (worksContainer) worksContainer.style.display = 'block';
+
+    // Create buttons for each group
+    document.querySelectorAll('.member-links').forEach(group => {
+        const groupNum = group.id.match(/\d+/)?.[0];
+        if (!groupNum) return;
+
+        const btn = document.createElement('button');
+        btn.className = 'view-all-btn';
+        btn.textContent = `View All Group ${groupNum} Works`;
+        btn.dataset.group = groupNum;
+        group.parentNode.insertBefore(btn, group.nextSibling);
+
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Compile all works for this group
+            const works = Array.from(document.querySelectorAll(`.member-work[data-group="${groupNum}"]`));
+            if (works.length === 0) return;
+            
+            // Create popup content
+            const popupContent = works.map(work => `
+                <div class="group-work-entry">
+                    <h3>${work.querySelector('.student-info h4')?.textContent || 'Student Work'}</h3>
+                    ${work.innerHTML}
+                </div>
+            `).join('');
+            
+            // Show in popup
+            document.getElementById('popup-content-container').innerHTML = `
+                <div class="group-works-container">
+                    <h2>Group ${groupNum} Works</h2>
+                    ${popupContent}
+                </div>
+            `;
+            
+            document.getElementById('popup').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         });
     });
 

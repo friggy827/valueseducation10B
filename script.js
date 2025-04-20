@@ -299,3 +299,38 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = 'auto';
     }
 });
+
+// Debug version of the view-all functionality
+function debugViewAll() {
+    console.log("Initializing debug mode...");
+    
+    // 1. Make sure all works are visible in DOM
+    const hiddenDiv = document.querySelector('div[style="display:none;"]');
+    if (hiddenDiv) {
+      hiddenDiv.style.display = 'block';
+      console.log("Unhid the works container");
+    }
+  
+    // 2. Enhanced button click handler
+    document.querySelectorAll('.view-works-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopImmediatePropagation();
+        const groupNum = this.dataset.group;
+        console.log(`Button clicked for Group ${groupNum}`);
+        
+        // Toggle visibility
+        document.body.classList.toggle(`show-group-${groupNum}`);
+        
+        // Force show works
+        document.querySelectorAll(`[data-group="${groupNum}"]`).forEach(work => {
+          work.style.display = 'block';
+          work.style.opacity = '1';
+        });
+        
+        console.log(`Toggled Group ${groupNum} works`);
+      });
+    });
+  }
+  
+  // Run after page loads
+  window.addEventListener('load', debugViewAll);

@@ -231,3 +231,21 @@ nav a {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* Hide works by default */
+.member-work { display: none; }
+
+/* Show works when body has show-group-X class */
+.show-group-1 [data-group="1"],
+.show-group-2 [data-group="2"],
+.show-group-3 [data-group="3"],
+.show-group-4 [data-group="4"],
+.show-group-5 [data-group="5"] {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

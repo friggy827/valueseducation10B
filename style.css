@@ -199,74 +199,72 @@ nav a {
   text-decoration: underline;
 }
 
-/* View All Works Button Styles */
-.view-works-btn {
-  background-color: #1a3e72;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 10px 0;
-  font-size: 14px;
-  transition: background-color 0.3s;
-}
-
-.view-works-btn:hover {
-  background-color: #0d2b56;
-}
-
-/* Initially hide some works */
-.member-work {
-  display: none;
-}
-
-/* Show all works when active */
-.show-all .member-work {
-  display: block;
-  animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 /* Ensure member works are hidden by default */
 .member-work {
-  display: none !important; /* Important to override any other styles */
+  display: none !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
 }
 
-/* Show works when their group is active */
-.show-group-1 [data-group="1"],
-.show-group-2 [data-group="2"],
-.show-group-3 [data-group="3"],
-.show-group-4 [data-group="4"],
-.show-group-5 [data-group="5"] {
+/* Show works when group is active */
+[class^="show-group-"] [data-group] {
   display: block !important;
-  animation: fadeIn 0.3s ease;
+  opacity: 1 !important;
+  height: auto !important;
+  overflow: visible !important;
+  visibility: visible !important;
+  animation: fadeIn 0.5s ease forwards;
 }
 
-/* Animation for smooth appearance */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Override popup styles when showing works */
+body[class^="show-group-"] .popup-overlay {
+  display: flex !important;
+  background: transparent !important;
+  pointer-events: none !important;
+}
+
+body[class^="show-group-"] .popup-content {
+  position: relative !important;
+  box-shadow: none !important;
+  max-height: none !important;
+  pointer-events: all !important;
 }
 
 /* Button styling */
 .view-works-btn {
-  background: #1a3e72;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  margin: 5px 0;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-  transition: background 0.3s;
+  display: block !important;
+  width: calc(100% - 20px) !important;
+  margin: 10px !important;
+  padding: 12px !important;
+  background: #1a3e72 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: all 0.3s !important;
+  z-index: 1000 !important;
 }
 
 .view-works-btn:hover {
-  background: #0d2b56;
+  background: #0d2b56 !important;
+  transform: translateY(-2px) !important;
+}
+
+@keyframes fadeIn {
+  from { 
+      opacity: 0;
+      transform: translateY(10px);
+  }
+  to { 
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+body[class^="show-group-"] .member-work {
+  position: relative !important;
+  z-index: 9999 !important;
 }

@@ -1,43 +1,81 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Add View All buttons to each group
-    document.querySelectorAll('.member-links').forEach(group => {
-        const groupNumber = group.id.replace('group', '').replace('-list', '');
-        const button = document.createElement('button');
-        
-        button.className = 'view-works-btn';
-        button.textContent = `View All Group ${groupNumber} Works`;
-        button.dataset.group = groupNumber;
-        
-        // Insert button after member links
-        group.parentNode.insertBefore(button, group.nextSibling);
-        
-        button.addEventListener('click', function(e) {
+    console.log('Script loaded - starting initialization');
+
+    // 1. Add View All buttons to each group
+    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+        const groupList = dropdown.querySelector('.member-links');
+        if (!groupList) {
+            console.warn('Missing .member-links in dropdown:', dropdown);
+            return;
+        }
+
+        const groupNum = groupList.id.match(/\d+/)?.[0];
+        if (!groupNum) {
+            console.warn('Cannot extract group number from:', groupList.id);
+            return;
+        }
+
+        console.log(`Processing Group ${groupNum}`);
+
+        // Create and insert button
+        const btn = document.createElement('button');
+        btn.className = 'view-works-btn';
+        btn.textContent = `View All Group ${groupNum} Works`;
+        btn.dataset.group = groupNum;
+        dropdown.appendChild(btn);
+
+        // Add click handler
+        btn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            
-            const groupClass = `show-group-${groupNumber}`;
-            const isShowing = document.body.classList.contains(groupClass);
-            
-            // Toggle the group class
-            document.body.classList.toggle(groupClass);
-            
-            // Update button text
-            button.textContent = isShowing 
-                ? `View All Group ${groupNumber} Works` 
-                : `Hide Group ${groupNumber} Works`;
+            console.log(`Button clicked for Group ${groupNum}`);
+
+            const body = document.body;
+            const showClass = `show-group-${groupNum}`;
+            const isShowing = body.classList.contains(showClass);
+
+            console.log(`Current state: ${isShowing ? 'Showing' : 'Hidden'}`);
+
+            body.classList.toggle(showClass);
+            btn.textContent = isShowing 
+                ? `View All Group ${groupNum} Works` 
+                : `Hide Group ${groupNum} Works`;
+
+            // Debug output
+            console.log('Body classes:', body.className);
+            console.log(`Member works for group ${groupNum}:`, 
+                document.querySelectorAll(`[data-group="${groupNum}"]`));
         });
     });
 
-    // Tag each work with its group
+    // 2. Tag each work with its group
+    console.log('Tagging member works with groups...');
     document.querySelectorAll('.member-work').forEach(work => {
-        const studentId = work.id.replace('-work', '');
-        const memberLink = document.querySelector(`.member-link[data-student="${studentId}"]`);
-        
-        if (memberLink) {
-            const group = memberLink.closest('.member-links').id
-                          .replace('group', '')
-                          .replace('-list', '');
-            work.dataset.group = group;
+        try {
+            const studentId = work.id.split('-')[0];
+            const memberLink = document.querySelector(`[data-student="${studentId}"]`);
+            
+            if (!memberLink) {
+                console.warn(`No member link found for: ${work.id}`);
+                return;
+            }
+
+            const groupList = memberLink.closest('.member-links');
+            if (!groupList) {
+                console.warn(`No group list found for: ${work.id}`);
+                return;
+            }
+
+            const groupNum = groupList.id.match(/\d+/)?.[0];
+            if (!groupNum) {
+                console.warn(`Cannot extract group number from: ${groupList.id}`);
+                return;
+            }
+
+            work.dataset.group = groupNum;
+            console.log(`Tagged ${work.id} with group ${groupNum}`);
+        } catch (error) {
+            console.error(`Error processing ${work.id}:`, error);
         }
     });
 });

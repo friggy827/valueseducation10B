@@ -137,6 +137,8 @@ function initializeViewAllButtons() {
             e.preventDefault();
             e.stopPropagation();
             
+            const popupContent = document.getElementById('popup-content-container');
+            
             const showClass = `show-group-${groupNum}`;
             const isShowing = document.body.classList.toggle(showClass);
             btn.textContent = isShowing 
@@ -211,4 +213,16 @@ function initializeGroupViewAll() {
             ?.closest('.member-links')?.id?.match(/\d+/)?.[0];
         if (group) work.dataset.group = group;
     });
+}
+
+function showPopup(content) {
+    const popupContent = document.getElementById('popup-content-container');
+    popupContent.innerHTML = content;
+    popup.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    // Reset scroll position
+    popupContent.scrollTop = 0;
+    popup.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
 }

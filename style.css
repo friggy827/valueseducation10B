@@ -272,3 +272,7 @@ body[class*="show-group-"] .popup-overlay {
   scroll-behavior: smooth;
   overflow-y: auto;
 }
+
+#popup {
+  display: none !important; /* Force hidden by default */
+}

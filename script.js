@@ -1,3 +1,19 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // First ensure popup is closed
+    const popup = document.getElementById('popup');
+    if (popup) {
+        popup.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Then initialize everything else
+    initializeSlideshow();
+    initializeDropdowns();
+    initializeMemberPopups();
+    initializeGroupViewAll();
+});
+
+
 // MAIN INITIALIZATION
 document.addEventListener('DOMContentLoaded', function() {
     initializeSlideshow();
@@ -165,9 +181,9 @@ function initializeViewAllButtons() {
 }
 
 function initializeGroupViewAll() {
-    // First unhide the works container
-    const worksContainer = document.querySelector('div[style*="display:none"]');
-    if (worksContainer) worksContainer.style.display = 'block';
+    // First ensure all popups are closed
+    const popup = document.getElementById('popup');
+    if (popup) popup.style.display = 'none';
 
     // Create buttons for each group
     document.querySelectorAll('.member-links').forEach(group => {

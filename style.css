@@ -276,22 +276,3 @@ body[class*="show-group-"] .popup-overlay {
 #popup {
   display: none !important; /* Force hidden by default */
 }
-
-.thumbnail-image {
-  max-width: 200px;
-  cursor: pointer;
-  transition: transform 0.3s;
-  border: 2px solid #1a3e72;
-  border-radius: 4px;
-}
-
-.thumbnail-image:hover {
-  transform: scale(1.05);
-}
-
-.enlarged-image {
-  max-width: 100%;
-  max-height: 80vh;
-  display: block;
-  margin: 0 auto;
-}

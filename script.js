@@ -1,3 +1,20 @@
+function showImagePopup(imageUrl, title) {
+    const popupContent = document.getElementById('popup-content-container');
+    popupContent.innerHTML = `
+        <h3>${title}</h3>
+        <img src="${imageUrl.replace('/thumbnail?', '/view?')}" 
+             alt="${title}" 
+             class="enlarged-image">
+    `;
+    
+    const popup = document.getElementById('popup');
+    popup.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    // Reset scroll position
+    popupContent.scrollTop = 0;
+}
+
 // MAIN INITIALIZATION - UPDATED
 document.addEventListener('DOMContentLoaded', function() {
     // Reset popup state first

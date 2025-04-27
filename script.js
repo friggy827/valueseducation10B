@@ -1,4 +1,4 @@
-import { DISCORD_WEBHOOK_URL } from './config.js';
+// MAIN INITIALIZATION - UPDATED
 document.addEventListener('DOMContentLoaded', function() {
     // Reset popup state first
     const popup = document.getElementById('popup');
@@ -219,31 +219,3 @@ function showPopup(content) {
     // Reset scroll position
     popupContent.scrollTop = 0;
 }
-
-// Discord Webhook Notification
-function sendDiscordWebhook() {
-    // Replace with your actual webhook URL
-    const webhookURL = DISCORD_WEBHOOK_URL;
-    
-  
-    // Visitor information
-    const message = {
-      content: `🌐 New visitor on your site!\n` +
-               `📄 Page: ${window.location.href}\n` +
-               `🕒 Time: ${new Date().toLocaleString()}\n` +
-               `🖥️ Platform: ${navigator.platform}\n` +
-               `👀 Referrer: ${document.referrer || 'Direct visit'}`
-    };
-  
-    // Send the webhook request
-    fetch(webhookURL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    }).catch(error => console.error('Error sending webhook:', error));
-  }
-  
-  // Call the function when the page loads
-  window.addEventListener('DOMContentLoaded', sendDiscordWebhook);

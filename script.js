@@ -128,28 +128,44 @@ function initializeMemberPopups() {
 }
 
 function initializeGroupViewAll() {
-    const btn = document.createElement('button');
-    btn.className = 'view-all-btn';
-    btn.textContent = `View All Group ${groupNum} Works`;
-    btn.dataset.group = groupNum;
-
+    // First ensure the works container is visible
+    const worksContainer = document.querySelector('div[style*="display:none"]');
+    if (worksContainer) worksContainer.style.display = 'block';
 
     // Create buttons for each group
     document.querySelectorAll('.member-links').forEach(group => {
         const groupNum = group.id.match(/\d+/)?.[0];
         if (!groupNum) return;
 
+        // Check if button already exists to avoid duplicates
+        if (group.nextElementSibling?.classList.contains('view-all-btn')) return;
+
         const btn = document.createElement('button');
         btn.className = 'view-all-btn';
         btn.textContent = `View All Group ${groupNum} Works`;
         btn.dataset.group = groupNum;
-        btn.style.marginTop = '10px';
-        btn.style.marginBottom = '15px';
-        btn.style.width = '100%';
-        btn.style.maxWidth = '250px';
-        btn.style.display = 'block';
-        btn.style.marginLeft = 'auto';
-        btn.style.marginRight = 'auto';
+        
+        // Add styling
+        btn.style.cssText = `
+            margin: 10px 0 15px 0;
+            width: 100%;
+            max-width: 250px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px 15px;
+            background-color: #1a3e72;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        `;
+
+        // Insert button after the member-links div
         group.parentNode.insertBefore(btn, group.nextSibling);
 
         btn.addEventListener('click', function(e) {
@@ -157,26 +173,30 @@ function initializeGroupViewAll() {
             e.stopPropagation();
             
             // Compile all works for this group
-            const works = Array.from(document.querySelectorAll(`.member-work[data-group="${groupNum}"]`));
+            const works = Array.from(document.querySelectorAll(`.member-work[id$="-work"]`)).filter(work => {
+                const studentId = work.id.replace('-work', '');
+                return document.querySelector(`.member-link[data-student="${studentId}"]`)?.closest('.member-links')?.id === `group${groupNum}-list`;
+            });
+
             if (works.length === 0) return;
             
             // Create popup content
             const popupContent = document.getElementById('popup-content-container');
+            const popup = document.getElementById('popup');
+            
             popupContent.innerHTML = `
                 <div class="group-works-container">
                     <h2>Group ${groupNum} Works</h2>
                     ${works.map(work => `
                         <div class="group-work-entry">
-                            <h3>${work.querySelector('.student-info h4')?.textContent || 'Student Work'}</h3>
                             ${work.innerHTML}
                         </div>
                     `).join('')}
                 </div>
             `;
             
-            // Reset scroll and show
-            popupContent.scrollTop = 0;
-            document.getElementById('popup').style.display = 'flex';
+            // Show popup
+            popup.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         });
     });

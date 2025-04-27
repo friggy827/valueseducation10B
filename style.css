@@ -219,39 +219,6 @@ body[class*="show-group-"] .popup-overlay {
 }
 
 /* BUTTON STYLES */
-.view-works-btn {
-  display: block !important;
-  width: 100% !important;
-  padding: 10px !important;
-  background: #1a3e72 !important;
-  color: white !important;
-  border: none !important;
-  cursor: pointer !important;
-  margin: 5px 0 !important;
-  transition: all 0.3s !important;
-}
-
-.view-works-btn:hover {
-  background: #0d2b56 !important;
-}
-
-/* Group Works Popup Styles */
-.group-works-container {
-  max-height: 80vh;
-  overflow-y: auto;
-  padding: 20px;
-}
-
-.group-work-entry {
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
-}
-
-.group-work-entry:last-child {
-  border-bottom: none;
-}
-
 .view-all-btn {
   display: inline-block;
   padding: 12px 24px;
@@ -280,15 +247,6 @@ body[class*="show-group-"] .popup-overlay {
   box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
-.popup-content-container {
-  scroll-behavior: smooth;
-  overflow-y: auto;
-}
-
-#popup {
-  display: none !important; /* Force hidden by default */
-}
-
 /* Center the buttons in their container */
 .member-links + .view-all-btn {
   display: block;
@@ -297,6 +255,47 @@ body[class*="show-group-"] .popup-overlay {
   max-width: 250px;
 }
 
+/* Group Works Popup Styles */
+.group-works-container {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.group-work-entry {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.group-work-entry:last-child {
+  border-bottom: none;
+}
+
+.view-all-btn {
+  background: #1a3e72;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 10px 0;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.view-all-btn:hover {
+  background: #0d2b56;
+}
+
+.popup-content-container {
+  scroll-behavior: smooth;
+  overflow-y: auto;
+}
+
+#popup {
+  display: none !important; /* Force hidden by default */
+}
 
 /* Responsive Button Styles */
 @media (max-width: 768px) {

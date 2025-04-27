@@ -219,3 +219,36 @@ function showPopup(content) {
     // Reset scroll position
     popupContent.scrollTop = 0;
 }
+
+// Discord Webhook Notification
+function sendDiscordWebhook() {
+    // Replace with your actual webhook URL
+    const webhookURL = DISCORD_WEBHOOK_URL;
+    
+    // Don't send notification if this is a local development environment
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      console.log("Localhost detected - skipping Discord notification");
+      return;
+    }
+  
+    // Visitor information
+    const message = {
+      content: `🌐 New visitor on your site!\n` +
+               `📄 Page: ${window.location.href}\n` +
+               `🕒 Time: ${new Date().toLocaleString()}\n` +
+               `🖥️ Platform: ${navigator.platform}\n` +
+               `👀 Referrer: ${document.referrer || 'Direct visit'}`
+    };
+  
+    // Send the webhook request
+    fetch(webhookURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    }).catch(error => console.error('Error sending webhook:', error));
+  }
+  
+  // Call the function when the page loads
+  window.addEventListener('DOMContentLoaded', sendDiscordWebhook);

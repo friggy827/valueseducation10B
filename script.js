@@ -225,11 +225,6 @@ function sendDiscordWebhook() {
     // Replace with your actual webhook URL
     const webhookURL = DISCORD_WEBHOOK_URL;
     
-    // Don't send notification if this is a local development environment
-    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-      console.log("Localhost detected - skipping Discord notification");
-      return;
-    }
   
     // Visitor information
     const message = {

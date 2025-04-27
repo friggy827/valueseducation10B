@@ -253,32 +253,6 @@ body[class*="show-group-"] .popup-overlay {
 }
 
 .view-all-btn {
-  background: #1a3e72;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin: 10px 0;
-  width: 100%;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background 0.3s;
-}
-
-.view-all-btn:hover {
-  background: #0d2b56;
-}
-
-.popup-content-container {
-  scroll-behavior: smooth;
-  overflow-y: auto;
-}
-
-#popup {
-  display: none !important; /* Force hidden by default */
-}
-
-/* View All Button Styles - Enhanced */
-.view-all-btn {
   display: inline-block;
   padding: 12px 24px;
   background-color: #1a3e72;
@@ -304,6 +278,15 @@ body[class*="show-group-"] .popup-overlay {
 .view-all-btn:active {
   transform: translateY(0);
   box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+.popup-content-container {
+  scroll-behavior: smooth;
+  overflow-y: auto;
+}
+
+#popup {
+  display: none !important; /* Force hidden by default */
 }
 
 /* Center the buttons in their container */

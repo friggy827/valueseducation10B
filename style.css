@@ -1,4 +1,3 @@
-/* Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +11,6 @@ body {
   line-height: 1.6;
 }
 
-/* Header Styles */
 header {
   background-color: #1a3e72;
   color: white;
@@ -20,7 +18,6 @@ header {
   text-align: center;
 }
 
-/* Navigation */
 nav {
   background-color: #0d2b56;
   padding: 10px 0;
@@ -40,7 +37,6 @@ nav a {
   display: block;
 }
 
-/* Dropdown Styles */
 .dropdown {
   position: relative;
 }
@@ -57,7 +53,6 @@ nav a {
   transition: all 0.3s ease;
 }
 
-/* Hover Functionality */
 @media (hover: hover) and (min-width: 769px) {
   .dropdown:hover .dropdown-content {
       display: block;
@@ -66,7 +61,6 @@ nav a {
   }
 }
 
-/* Mobile Dropdown */
 @media (max-width: 768px) {
   .dropdown.active .dropdown-content {
       display: block;
@@ -77,7 +71,6 @@ nav a {
   .dropdown.active > a::after { content: " ▴"; }
 }
 
-/* Slideshow */
 .slideshow-container {
   position: relative;
   max-width: 100%;
@@ -115,7 +108,6 @@ nav a {
   background-color: rgba(0,0,0,0.8);
 }
 
-/* Popup Styles */
 .popup-overlay {
   display: none;
   position: fixed;
@@ -150,7 +142,6 @@ nav a {
   cursor: pointer;
 }
 
-/* Video Submission Styles */
 .video-submission {
   margin-top: 20px;
   max-width: 800px;
@@ -164,8 +155,7 @@ nav a {
 
 .video-wrapper {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
+  padding-bottom: 56.25%;
   overflow: hidden;
   margin-bottom: 20px;
   border-radius: 8px;
@@ -199,7 +189,6 @@ nav a {
   text-decoration: underline;
 }
 
-/* WORK VISIBILITY */
 .member-work {
   display: none !important;
   opacity: 0 !important;
@@ -213,12 +202,10 @@ body[class*="show-group-"] .member-work {
   z-index: 100 !important;
 }
 
-/* OVERRIDE POPUP CONFLICTS */
 body[class*="show-group-"] .popup-overlay {
   display: none !important;
 }
 
-/* BUTTON STYLES */
 .view-all-btn {
   display: inline-block;
   padding: 12px 24px;
@@ -247,7 +234,6 @@ body[class*="show-group-"] .popup-overlay {
   box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
-/* Center the buttons in their container */
 .member-links + .view-all-btn {
   display: block;
   margin: 10px auto;
@@ -255,7 +241,6 @@ body[class*="show-group-"] .popup-overlay {
   max-width: 250px;
 }
 
-/* Group Works Popup Styles */
 .group-works-container {
   max-height: 80vh;
   overflow-y: auto;
@@ -294,10 +279,9 @@ body[class*="show-group-"] .popup-overlay {
 }
 
 #popup {
-  display: none !important; /* Force hidden by default */
+  display: none !important;
 }
 
-/* Responsive Button Styles */
 @media (max-width: 768px) {
   .view-all-btn {
     padding: 10px 18px;

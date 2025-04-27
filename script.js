@@ -1,23 +1,18 @@
-// MAIN INITIALIZATION - UPDATED
 document.addEventListener('DOMContentLoaded', function() {
-    // Reset popup state first
     const popup = document.getElementById('popup');
     if (popup) {
         popup.style.display = 'none';
         document.body.style.overflow = 'auto';
     }
-    
-    // Clear any residual body classes
+
     document.body.className = '';
-    
-    // Initialize features
+
     initializeSlideshow();
     initializeDropdowns();
     initializeMemberPopups();
-    initializeGroupViewAll(); // Only use this one, remove initializeViewAllButtons()
+    initializeGroupViewAll();
 });
 
-// SLIDESHOW FUNCTIONALITY
 function initializeSlideshow() {
     let slideIndex = 1;
     let slideInterval;
@@ -52,15 +47,12 @@ function initializeSlideshow() {
         if (touchEndX > touchStartX + threshold) plusSlides(-1);
     }
 
-    // Public functions
     window.plusSlides = (n) => { clearInterval(slideInterval); showSlides(slideIndex += n); startAutoAdvance(); };
     window.currentSlide = (n) => { clearInterval(slideInterval); showSlides(slideIndex = n); startAutoAdvance(); };
 
-    // Initialize
     showSlides(slideIndex);
     startAutoAdvance();
-    
-    // Touch support
+
     const slideshow = document.querySelector('.slideshow-container');
     if (slideshow) {
         slideshow.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
@@ -72,7 +64,6 @@ function initializeSlideshow() {
     }
 }
 
-// DROPDOWN FUNCTIONALITY
 function initializeDropdowns() {
     const dropdowns = document.querySelectorAll('.dropdown');
     
@@ -93,7 +84,6 @@ function initializeDropdowns() {
     });
 }
 
-// POPUP FUNCTIONALITY
 function initializeMemberPopups() {
     const popup = document.getElementById('popup');
     const popupContent = document.getElementById('popup-content-container');
@@ -112,7 +102,6 @@ function initializeMemberPopups() {
         document.body.style.overflow = 'auto';
     }
 
-    // Individual member popups
     document.querySelectorAll('.member-link').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -128,24 +117,19 @@ function initializeMemberPopups() {
 }
 
 function initializeGroupViewAll() {
-    // First ensure the works container is visible
     const worksContainer = document.querySelector('div[style*="display:none"]');
     if (worksContainer) worksContainer.style.display = 'block';
 
-    // Create buttons for each group
     document.querySelectorAll('.member-links').forEach(group => {
         const groupNum = group.id.match(/\d+/)?.[0];
         if (!groupNum) return;
-
-        // Check if button already exists to avoid duplicates
         if (group.nextElementSibling?.classList.contains('view-all-btn')) return;
 
         const btn = document.createElement('button');
         btn.className = 'view-all-btn';
         btn.textContent = `View All Group ${groupNum} Works`;
         btn.dataset.group = groupNum;
-        
-        // Add styling
+
         btn.style.cssText = `
             margin: 10px 0 15px 0;
             width: 100%;
@@ -165,22 +149,19 @@ function initializeGroupViewAll() {
             text-align: center;
         `;
 
-        // Insert button after the member-links div
         group.parentNode.insertBefore(btn, group.nextSibling);
 
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            
-            // Compile all works for this group
+
             const works = Array.from(document.querySelectorAll(`.member-work[id$="-work"]`)).filter(work => {
                 const studentId = work.id.replace('-work', '');
                 return document.querySelector(`.member-link[data-student="${studentId}"]`)?.closest('.member-links')?.id === `group${groupNum}-list`;
             });
 
             if (works.length === 0) return;
-            
-            // Create popup content
+
             const popupContent = document.getElementById('popup-content-container');
             const popup = document.getElementById('popup');
             
@@ -194,14 +175,12 @@ function initializeGroupViewAll() {
                     `).join('')}
                 </div>
             `;
-            
-            // Show popup
+
             popup.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         });
     });
 
-    // Tag works with groups
     document.querySelectorAll('.member-work').forEach(work => {
         const studentId = work.id.split('-')[0];
         const group = document.querySelector(`.member-link[data-student="${studentId}"]`)
@@ -215,7 +194,5 @@ function showPopup(content) {
     popupContent.innerHTML = content;
     popup.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    
-    // Reset scroll position
     popupContent.scrollTop = 0;
 }

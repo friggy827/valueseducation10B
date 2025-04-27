@@ -128,9 +128,11 @@ function initializeMemberPopups() {
 }
 
 function initializeGroupViewAll() {
-    // First unhide the works container
-    const worksContainer = document.querySelector('div[style*="display:none"]');
-    if (worksContainer) worksContainer.style.display = 'block';
+    const btn = document.createElement('button');
+    btn.className = 'view-all-btn';
+    btn.textContent = `View All Group ${groupNum} Works`;
+    btn.dataset.group = groupNum;
+
 
     // Create buttons for each group
     document.querySelectorAll('.member-links').forEach(group => {
@@ -141,6 +143,13 @@ function initializeGroupViewAll() {
         btn.className = 'view-all-btn';
         btn.textContent = `View All Group ${groupNum} Works`;
         btn.dataset.group = groupNum;
+        btn.style.marginTop = '10px';
+        btn.style.marginBottom = '15px';
+        btn.style.width = '100%';
+        btn.style.maxWidth = '250px';
+        btn.style.display = 'block';
+        btn.style.marginLeft = 'auto';
+        btn.style.marginRight = 'auto';
         group.parentNode.insertBefore(btn, group.nextSibling);
 
         btn.addEventListener('click', function(e) {

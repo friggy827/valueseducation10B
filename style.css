@@ -276,3 +276,55 @@ body[class*="show-group-"] .popup-overlay {
 #popup {
   display: none !important; /* Force hidden by default */
 }
+
+/* View All Button Styles - Enhanced */
+.view-all-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #1a3e72;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px 0;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.view-all-btn:hover {
+  background-color: #0d2b56;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.view-all-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+/* Center the buttons in their container */
+.member-links + .view-all-btn {
+  display: block;
+  margin: 10px auto;
+  width: auto;
+  max-width: 250px;
+}
+
+
+/* Responsive Button Styles */
+@media (max-width: 768px) {
+  .view-all-btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: none;
+  }
+  
+  .member-links + .view-all-btn {
+    margin: 8px 0;
+  }
+}

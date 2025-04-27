@@ -1,4 +1,4 @@
-// MAIN INITIALIZATION - UPDATED
+import { DISCORD_WEBHOOK_URL } from './config.js';
 document.addEventListener('DOMContentLoaded', function() {
     // Reset popup state first
     const popup = document.getElementById('popup');
